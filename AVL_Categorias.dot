@@ -1,0 +1,14 @@
+digraph G{
+rankdir=TB;
+node [margin=0 shape=circle height=1.2 color=crimson fontcolor=white style=filled ];
+hugo->carlos
+carlos->byron
+carlos->diego
+diego->esteela
+hugo->lucas
+lucas->juan
+lucas->maria
+maria->sebas
+sebas->sofia
+
+}
