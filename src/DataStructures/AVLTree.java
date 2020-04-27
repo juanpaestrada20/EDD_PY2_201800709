@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 public class AVLTree {
 
     public AVLNode root;
-    public String ruta;
 
     public AVLTree() {
         root = null;
