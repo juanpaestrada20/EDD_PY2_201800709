@@ -141,7 +141,7 @@ public class AVLTree {
     }
 
     private AVLNode deleteNode(AVLNode n, String key) {
-        // NO SE ENCONTRO EL NODO
+        // SE ENCONTRO EL NODO
         if (n == null) {
             return n;
         }
@@ -149,11 +149,12 @@ public class AVLTree {
             n.left = deleteNode(n.left, key);
         } else if (key.compareToIgnoreCase(n.categoria) > 0) {
             n.right = deleteNode(n.right, key);
-        } // NODO ENCONTRADO PARA ELIMINAR
+        } 
+        // NODO ENCONTRADO PARA ELIMINAR
         else {
             if (n.left == null || n.right == null) {
-                // NODO SIN HIJOS
-                AVLNode temp;
+                // NODO SIN HIJOS O UN HIJO
+                AVLNode temp = null;
                 if (n.left == null) {
                     temp = n.right;
                 } else {
@@ -172,8 +173,9 @@ public class AVLTree {
                 // SI TIENE AMBOS HIJOS
                 // BUSCA EL MAS PEQUEÑO DEL SUBARBOL DERECHO
                 AVLNode temp = minValueNode(n.right);
+                System.out.println(temp.categoria);
                 // COLOCAMOS EL NODO MAS PEQUEÑO EN EL NODO
-                temp.categoria = temp.categoria;
+                n.categoria = temp.categoria;
                 // ELIMINAR EL NODO
                 n.right = deleteNode(n.right, temp.categoria);
             }
@@ -184,7 +186,7 @@ public class AVLTree {
         }
 
         // ACTUALIZAR LA ALTUEA DEL NODO ACTUAL
-        n.heigth = max(height(n.left), height(n.right));
+        n.heigth = max(height(n.left), height(n.right)) + 1;
 
         // FACTOR DE EQUILIBRIO
         int balance = getBalance(n);
@@ -270,7 +272,6 @@ public class AVLTree {
         try {
             // CREACION DE ARCHIVO CON EXTENSION .DOT
             File fileDot = new File(rdot);
-            System.out.println(fileDot.getAbsoluteFile());
             fileDot.setWritable(true);
             String rutaPng = fileDot.getAbsolutePath().substring(0, fileDot.getAbsolutePath().length() - 4) + ".png";
             File file = new File(rdot);
