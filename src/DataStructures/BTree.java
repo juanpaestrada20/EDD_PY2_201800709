@@ -28,13 +28,68 @@ public class BTree {
         this.t = t;
     }
 
-    public BTreeNode search(BTreeNode node, long k) {
+    public Libro buscarLibroNombre(String k) {
+        return searchBook(root, k);
+    }
+
+    private Libro searchBook(BTreeNode n, String k) {
+        int i;
+        Libro temp = null;
+        for (i = 0; i < n.n; i++) {
+            if (!n.leaf) {
+                if (n.C[i] != null) {
+                    temp = searchBook(n.C[i], k);
+                }
+                if (temp != null) {
+                    return temp;
+                }
+            }
+            if (n.keys[i].getTitulo().equalsIgnoreCase(k)) {
+                return n.keys[i];
+            }
+        }
+        if (!n.leaf) {
+            if (n.C[i] != null) {
+                return searchBook(n.C[i], k);
+            }
+        }
+
+        return temp;
+
+    }
+
+    public void recorrerInOrder() {
+        if (root != null) {
+            InOrder(root);
+        }
+    }
+
+    private void InOrder(BTreeNode n) {
+        if (n != null) {
+            int i;
+            for (i = 0; i < n.n; i++) {
+                if (!n.leaf) {
+                    InOrder(n.C[i]);
+                }
+                System.out.println(n.keys[i].getTitulo() + " -> ");
+            }
+            if (!n.leaf) {
+                InOrder(n.C[i]);
+            }
+        }
+    }
+
+    public Libro buscarLibroISBN(long k) {
+        return search(root, k);
+    }
+
+    private Libro search(BTreeNode node, long k) {
         int i = 0;
-        while (i <= node.n-1 && k > node.keys[i].getISBN()) {
+        while (i <= node.n - 1 && k > node.keys[i].getISBN()) {
             i++;
         }
-        if (i <= node.n-1 && k == node.keys[i].getISBN()) {
-            return node;
+        if (i <= node.n - 1 && k == node.keys[i].getISBN()) {
+            return node.keys[i];
         } else if (node.leaf) {
             return null;
         } else {
@@ -51,7 +106,7 @@ public class BTree {
         z.n = t - 1;
 
         for (int j = 0; j < t - 1; j++) {
-            z.keys[j] = y.keys[j+t];
+            z.keys[j] = y.keys[j + t];
         }
 
         if (!y.leaf) {
@@ -62,23 +117,23 @@ public class BTree {
 
         y.n = t - 1;
 
-        for (int j = x.n+1; j > i+1; j--) {
+        for (int j = x.n + 1; j > i + 1; j--) {
             x.C[j + 1] = x.C[j];
         }
 
         x.C[i + 1] = z;
 
         for (int j = x.n; j > i; j--) {
-            x.keys[j] = x.keys[j-1];
+            x.keys[j] = x.keys[j - 1];
         }
 
-        x.keys[i] = y.keys[t-1];
+        x.keys[i] = y.keys[t - 1];
         x.n = x.n + 1;
     }
 
     public void insert(Libro k) {
         BTreeNode temp = root;
-        if(search(root, k.getISBN())!=null){
+        if (search(root, k.getISBN()) != null) {
             return;
         }
         if (temp.n == (2 * t - 1)) {
@@ -95,14 +150,14 @@ public class BTree {
     }
 
     public void insertNonFull(BTreeNode x, Libro k) {
-        int i = x.n-1;
+        int i = x.n - 1;
         if (x.leaf) {
-            
+
             while (i >= 0 && k.getISBN() < x.keys[i].getISBN()) {
-                x.keys[i+1] = x.keys[i];
+                x.keys[i + 1] = x.keys[i];
                 i--;
             }
-            x.keys[i+1] = k;
+            x.keys[i + 1] = k;
             x.n++;
         } else {
             while (i >= 0 && k.getISBN() < x.keys[i].getISBN()) {
@@ -126,14 +181,14 @@ public class BTree {
             int nodo = contadorNodos;
             escritura += "node" + contadorNodos + "[label = \"";
             for (int i = 0; i < n.n; i++) {
-                escritura += "<f" + i + "> |" + n.keys[i].getTitulo()+ "|";
+                escritura += "<f" + i + "> |" + n.keys[i].getTitulo() + "|";
             }
-            
+
             escritura += "<f" + (n.n) + ">\"];\n";
-            for(int i = 0; i<n.C.length; i++){
+            for (int i = 0; i < n.C.length; i++) {
                 escritura = createTree(n.C[i], escritura);
-                if(n.C[i]!=null){
-                    escritura += "\"node"+nodo + "\":f"+i +"->\"node"+contadorNodos+"\";\n";
+                if (n.C[i] != null) {
+                    escritura += "\"node" + nodo + "\":f" + i + "->\"node" + contadorNodos + "\";\n";
                 }
             }
         }

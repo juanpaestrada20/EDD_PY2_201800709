@@ -44,7 +44,13 @@ public class main {
         t.insert(new Libro(846564501, "Harry Potter 20", "J.K.", "", 0, 0, "", "", 0));
 
         t.generateDotTree();
-
+        
+        t.recorrerInOrder();
+        try{
+        System.out.println(t.buscarLibroNombre("Harry Potter 1").getISBN());
+        }catch(NullPointerException e){
+            System.out.println("No se encontro el libro " +e.toString());
+        }
         AVLTree tree = new AVLTree();
 
         tree.agregarCategoria("Novela");
