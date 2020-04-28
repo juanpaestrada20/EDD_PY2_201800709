@@ -1,27 +1,30 @@
 digraph G{
 rankdir=TB;
-node [margin=0 shape=circle height=1.2 color=crimson fontcolor=white style=filled ];
-jose->ana
-ana->alejandro
-alejandro->alejandra
-alejandro->alex
-ana->diego
-diego->christian
-christian->cesar
-cesar->auron
-christian->cristobal
-diego->enrique
-enrique->eduardo
-enrique->estuardo
-jose->maritza
-maritza->luzu
-luzu->juan
-juan->luis
-luzu->maria
-maria->manu
-maritza->pablo
-pablo->moran
-moran->nelson
-pablo->sofia
+node [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];
+Novela->Comics
+Comics->Canciones
+Canciones->Aventura
+Aventura->Arte
+Aventura->Biografia
+Canciones->Cientifico
+Cientifico->Ciencias
+Cientifico->Comedia
+Comics->Informativo
+Informativo->Filosofia
+Filosofia->Ficcion
+Filosofia->Historia
+Informativo->Misterio
+Misterio->Matematica
+Misterio->Musica
+Novela->Sagrados
+Sagrados->Romance
+Romance->Poesia
+Poesia->Piratas
+Poesia->Quimica
+Romance->Sagas
+Sagrados->Tecnicos
+Tecnicos->Suspenso
+Tecnicos->Terror
+Terror->Vijaes
 
 }

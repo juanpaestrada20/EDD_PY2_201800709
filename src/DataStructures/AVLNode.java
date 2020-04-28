@@ -20,7 +20,7 @@ public class AVLNode {
     public AVLNode(String categoria) {
         this.categoria = categoria;
         heigth = 1;
-        this.libros = new BTree();
+        this.libros = new BTree(3);
     }
 
 }

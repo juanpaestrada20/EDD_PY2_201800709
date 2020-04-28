@@ -1,0 +1,5 @@
+digraph G{
+rankdir=LR;
+node [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];
+Arte->Aventura->Biografia->Canciones->Ciencias->Cientifico->Comedia->Comics->Ficcion->Filosofia->Historia->Informativo->Matematica->Misterio->Musica->Novela->Piratas->Poesia->Quimica->Romance->Sagas->Sagrados->Suspenso->Tecnicos->Terror->Vijaes
+}

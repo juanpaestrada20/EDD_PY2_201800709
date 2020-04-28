@@ -101,20 +101,20 @@ public class AVLTree {
 
         // BALANCEO 
         // CASO 1: SIMPLE IZQUIERDA - IZQUIERDA
-        if (balance == 2 && (key.compareToIgnoreCase(n.left.categoria) < 0)) {
+        if (balance > 1 && (key.compareToIgnoreCase(n.left.categoria) < 0)) {
             return rightRotate(n);
         }
         // CASO 2: SIMPLE DERECHA - DERECHA
-        if (balance == -2 && (key.compareToIgnoreCase(n.right.categoria) > 0)) {
+        if (balance < -1 && (key.compareToIgnoreCase(n.right.categoria) > 0)) {
             return leftRotate(n);
         }
         // CASO 3: DOBLE IZQUIERDA - DERECHA
-        if (balance == 2 && (key.compareToIgnoreCase(n.left.categoria) > 0)) {
+        if (balance > 1 && (key.compareToIgnoreCase(n.left.categoria) > 0)) {
             n.left = leftRotate(n.left);
             return rightRotate(n);
         }
         // CASO 4: DOBLE DERECHA - IZQUIERDA
-        if (balance == -2 && (key.compareToIgnoreCase(n.right.categoria) > 0)) {
+        if (balance < -1 && (key.compareToIgnoreCase(n.right.categoria) < 0)) {
             n.right = rightRotate(n.right);
             return leftRotate(n);
         }
@@ -227,7 +227,7 @@ public class AVLTree {
         if (n != null) {
             escritura = createTreeInOrder(n.left, escritura);
             escritura += n.categoria + "->";
-            escritura = createTreeInOrder(n.left, escritura);
+            escritura = createTreeInOrder(n.right, escritura);
 
         }
         return escritura;
@@ -237,7 +237,7 @@ public class AVLTree {
         if (n != null) {
             escritura += n.categoria + "->";
             escritura = createTreePreOrder(n.left, escritura);
-            escritura = createTreePreOrder(n.left, escritura);
+            escritura = createTreePreOrder(n.right, escritura);
 
         }
         return escritura;
@@ -246,7 +246,7 @@ public class AVLTree {
     private String createTreePostOrder(AVLNode n, String escritura) {
         if (n != null) {
             escritura = createTreePostOrder(n.left, escritura);
-            escritura = createTreePostOrder(n.left, escritura);
+            escritura = createTreePostOrder(n.right, escritura);
             escritura += n.categoria + "->";
         }
         return escritura;
@@ -256,16 +256,54 @@ public class AVLTree {
         String escritura = "";
         StringBuilder resultado = new StringBuilder();
         String rdot = "AVL_Categorias.dot";
-        String rpng = "AVL_Categorias.png";
         AVLNode temp = root;
-        resultado.append("digraph G{\nrankdir=TB;\nnode [margin=0 shape=circle height=1.2 color=crimson fontcolor=white style=filled ];\n");
+        resultado.append("digraph G{\nrankdir=TB;\nnode [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];\n");
         escritura = createTree(temp, escritura);
         resultado.append(escritura);
         resultado.append("\n}");
-        generateDot(rdot, rpng, resultado.toString());
+        generateDot(rdot, resultado.toString());
+    }
+    
+    public void generatePreOrder(){
+        String escritura = "";
+        StringBuilder resultado = new StringBuilder();
+        String rdot = "AVL_Categorias_PreOrder.dot";
+        AVLNode temp = root;
+        resultado.append("digraph G{\nrankdir=LR;\nnode [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];\n");
+        escritura = createTreePreOrder(temp, escritura);
+        escritura = escritura.substring(0, escritura.length()-2);
+        resultado.append(escritura);
+        resultado.append("\n}");
+        generateDot(rdot, resultado.toString());
+    }
+    
+    public void generateInOrder(){
+        String escritura = "";
+        StringBuilder resultado = new StringBuilder();
+        String rdot = "AVL_Categorias_InOrder.dot";
+        AVLNode temp = root;
+        resultado.append("digraph G{\nrankdir=LR;\nnode [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];\n");
+        escritura = createTreeInOrder(temp, escritura);
+        escritura = escritura.substring(0, escritura.length()-2);
+        resultado.append(escritura);
+        resultado.append("\n}");
+        generateDot(rdot, resultado.toString());
+    }
+    
+    public void generatePostOrder(){
+        String escritura = "";
+        StringBuilder resultado = new StringBuilder();
+        String rdot = "AVL_Categorias_PostOrder.dot";
+        AVLNode temp = root;
+        resultado.append("digraph G{\nrankdir=LR;\nnode [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];\n");
+        escritura = createTreePostOrder(temp, escritura);
+        escritura = escritura.substring(0, escritura.length()-2);
+        resultado.append(escritura);
+        resultado.append("\n}");
+        generateDot(rdot, resultado.toString());
     }
 
-    private void generateDot(String rdot, String rpng, String grafo) {
+    private void generateDot(String rdot, String grafo) {
 
         FileWriter writer = null;
         try {
