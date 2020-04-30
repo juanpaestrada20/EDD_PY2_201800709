@@ -8,6 +8,7 @@ package Inicio;
 import Clases.Libro;
 import DataStructures.AVLTree;
 import DataStructures.BTree;
+import java.util.ArrayList;
 
 /**
  *
@@ -33,24 +34,51 @@ public class main {
         t.insert(new Libro(846564514, "Harry Potter 9", "J.K.", "", 0, 0, "", "", 0));
         t.insert(new Libro(846564510, "Harry Potter 10", "J.K.", "", 0, 0, "", "", 0));
         t.insert(new Libro(846564519, "Harry Potter 11", "J.K.", "", 0, 0, "", "", 0));
-        t.insert(new Libro(846564528, "Harry Potter 12", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564528, "camarada", "J.K.", "", 0, 0, "", "", 0));
         t.insert(new Libro(846564503, "Harry Potter 13", "J.K.", "", 0, 0, "", "", 0));
         t.insert(new Libro(846564517, "Harry Potter 14", "J.K.", "", 0, 0, "", "", 0));
-        t.insert(new Libro(846564532, "Harry Potter 15", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564532, "Harry cama 15", "J.K.", "", 0, 0, "", "", 0));
         t.insert(new Libro(846564515, "Harry Potter 16", "J.K.", "", 0, 0, "", "", 0));
         t.insert(new Libro(846564516, "Harry Potter 17", "J.K.", "", 0, 0, "", "", 0));
         t.insert(new Libro(846564526, "Harry Potter 18", "J.K.", "", 0, 0, "", "", 0));
-        t.insert(new Libro(846564527, "Harry Potter 19", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564527, "camara", "J.K.", "", 0, 0, "", "", 0));
         t.insert(new Libro(846564501, "Harry Potter 20", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564548, "Harry Potter 21", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564502, "Harry Potter 22", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564563, "Harry Potter 23", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564584, "Harry Potter 24", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564533, "Harry Potter 25", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564555, "Harry Potter 26", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564566, "Harry Potter 27", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564518, "Harry Potter 28", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564519, "Harry Potter 29", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564524, "Harry Potter 30", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564500, "Harry Potter 31", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564507, "Harry Potter 32", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564588, "Harry Potter 33", "J.K.", "", 0, 0, "", "", 0));
+        t.insert(new Libro(846564599, "Harry Potter 34", "J.K.", "", 0, 0, "", "", 0));
 
         t.generateDotTree();
+        Libro temp = t.buscarLibroNombre("cam");
         
-        t.recorrerInOrder();
-        try{
-        System.out.println(t.buscarLibroNombre("Harry Potter 1").getISBN());
-        }catch(NullPointerException e){
-            System.out.println("No se encontro el libro " +e.toString());
+        if(temp == null){
+            System.out.println("Nose encontro el libro");
+            ArrayList<Libro> libros = t.buscarLibroParteNombre("cam");
+            for (Libro libro : libros) {
+                System.out.println(libro.getTitulo());
+            }
+        }else{
+            System.out.println("Libro Encontrado");
         }
+        
+        t.eliminarLibro(846564500);
+        t.eliminarLibro(846564501);
+        t.eliminarLibro(846564519);
+        t.eliminarLibro(846564532);
+        t.eliminarLibro(846564599);
+        t.eliminarLibro(846564500);
+        t.generateDotTree();
+        
         AVLTree tree = new AVLTree();
 
         tree.agregarCategoria("Novela");
