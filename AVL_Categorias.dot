@@ -25,6 +25,6 @@ Romance->Sagas
 Sagrados->Tecnicos
 Tecnicos->Suspenso
 Tecnicos->Terror
-Terror->Vijaes
+Terror->Viajes
 
 }

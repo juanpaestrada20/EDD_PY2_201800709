@@ -425,9 +425,10 @@ public class BTree {
         String escritura = "";
         contadorNodos = 0;
         StringBuilder resultado = new StringBuilder();
-        String rdot = "BTree_Libros.dot";
+        String rdot = "BTree_Libros_" + root.keys[0].getCategoria() + ".dot";
         BTreeNode temp = root;
         resultado.append("digraph G {\nnode [shape = record,height=.1 color=black fillcolor=salmon style=filled];\n");
+        resultado.append("labelloc=\"t\";\nlabel=\"Libros de " + root.keys[0].getCategoria() +"\";\n");
         escritura = createTree(temp, escritura);
         resultado.append(escritura);
         resultado.append("\n}");

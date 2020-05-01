@@ -5,6 +5,7 @@
  */
 package DataStructures;
 
+import Clases.Libro;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -208,7 +209,89 @@ public class AVLTree {
 
         return n;
     }
-
+    
+    // AGREGAR LIBROS A CATEGORIAS
+    public void insertBook(Libro book){
+        AVLNode temp = searchCategory(book.getCategoria());
+        if(temp != null){
+            System.out.println("Se agrego libro");
+            temp.libros.insert(book);
+        }else{
+            this.agregarCategoria(book.getCategoria());
+            temp = searchCategory(book.getCategoria());
+            temp.libros.insert(book);
+            System.out.println("Se creo categoria");
+        }
+    }
+    
+    // BUSQUEDAS
+    public AVLNode searchCategory(String nombre){
+        if(root != null){
+           return search(root, nombre);
+        }
+        return null;
+    }
+    
+    private AVLNode search(AVLNode n, String nombre){
+        if(n == null){
+            return null;
+        }else if(n.categoria.equalsIgnoreCase(nombre)){
+            return n;
+        }else if(n.categoria.compareToIgnoreCase(nombre) > 0){
+            return search(n.left, nombre);
+        }else{
+            return search(n.right, nombre);
+        }
+    }
+    
+    // OBTENER ARBOL B DE CIERTA CATEGORIA
+    public void getBooks(String category){
+        AVLNode temp = searchCategory(category);
+        if(temp != null){
+            temp.libros.generateDotTree();
+        }else{
+            System.out.println("No tiene libros");
+        }
+    }
+    
+    
+    // ELIMINAR LIBRO DE CATEGORIA
+    public void deleteBook(long ISBN){
+        AVLNode temp = root;
+        deleteLibro(temp, ISBN);
+    }
+    
+    public void deleteBookName(String name){
+        AVLNode temp = root;
+        deleteLibro2(temp, name);
+    }
+    
+    // POR ISBN
+    private void deleteLibro(AVLNode n, long libro){
+        if(n != null){
+            deleteLibro(n.left, libro);
+            Libro aux = n.libros.buscarLibroISBN(libro);
+            if(aux != null){
+                n.libros.eliminarLibro(libro);
+                return;
+            }
+            deleteLibro(n.right, libro);
+        }
+    }
+    
+    // POR NOMBRE
+    private void deleteLibro2(AVLNode n, String libro){
+        if(n != null){
+            deleteLibro2(n.left, libro);
+            Libro aux = n.libros.buscarLibroNombre(libro);
+            if(aux != null){
+                deleteLibro(n, aux.getISBN());
+                return;
+            }
+            deleteLibro2(n.right, libro);
+        }
+    }
+    // GRAFICAR
     private String createTree(AVLNode n, String escritura) {
         if (n != null) {
             if (n.left != null) {

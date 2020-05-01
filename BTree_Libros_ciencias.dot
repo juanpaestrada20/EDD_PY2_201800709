@@ -1,0 +1,17 @@
+digraph G {
+node [shape = record,height=.1 color=black fillcolor=salmon style=filled];
+labelloc="t";
+label="Libros de ciencias";
+node1[label = "<f0> |846564503|<f1> |846564506|<f2> |846564509|<f3> |846564512|<f4>"];
+node2[label = "<f0> |846564501|<f1> |846564502|<f2>"];
+"node1":f0->"node2";
+node3[label = "<f0> |846564504|<f1> |846564505|<f2>"];
+"node1":f1->"node3";
+node4[label = "<f0> |846564507|<f1> |846564508|<f2>"];
+"node1":f2->"node4";
+node5[label = "<f0> |846564510|<f1> |846564511|<f2>"];
+"node1":f3->"node5";
+node6[label = "<f0> |846564513|<f1> |846564514|<f2> |846564515|<f3> |846564516|<f4>"];
+"node1":f4->"node6";
+
+}
