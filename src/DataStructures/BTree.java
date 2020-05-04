@@ -28,6 +28,34 @@ public class BTree {
         root = new BTreeNode(t, true);
         this.t = t;
     }
+    
+    private ArrayList<Long> buscarLibroUsuario(long k) {
+        ArrayList<Long> libros = new ArrayList<Long>();
+        libros = searchBook3(root, k, libros);
+        return libros;
+    }
+
+    private ArrayList<Long> searchBook3(BTreeNode n, long k, ArrayList<Long> libros) {
+        int i;
+        for (i = 0; i < n.n; i++) {
+            if (!n.leaf) {
+                if (n.C[i] != null) {
+                    libros = searchBook3(n.C[i], k, libros);
+                }
+            }
+            if (n.keys[i].getCarnet() == k) {
+                libros.add(n.keys[i].getISBN());
+            }
+        }
+        if (!n.leaf) {
+            if (n.C[i] != null) {
+                libros = searchBook3(n.C[i], k, libros);
+            }
+        }
+
+        return libros;
+
+    }
 
     public ArrayList<Libro> buscarLibroParteNombre(String k) {
         ArrayList<Libro> libros = new ArrayList<Libro>();
@@ -397,6 +425,13 @@ public class BTree {
             }
         }
     }
+    
+    public void deleteUserBooks(long carnet){
+        ArrayList<Long> libros = buscarLibroUsuario(carnet);
+        for (Long codigo : libros) {
+            eliminarLibro(codigo);
+        }
+    }
 
     // GRAFICAR
     private String createTree(BTreeNode n, String escritura) {
@@ -405,7 +440,7 @@ public class BTree {
             int nodo = contadorNodos;
             escritura += "node" + contadorNodos + "[label = \"";
             for (int i = 0; i < n.n; i++) {
-                escritura += "<f" + i + "> |" + n.keys[i].getISBN() + "|";
+                escritura += "<f" + i + "> |" + n.keys[i].getTitulo() + "\\n"+ n.keys[i].getISBN() + "\\n"+ n.keys[i].getCategoria() + "\\n"+ n.keys[i].getCarnet()+ "|";
             }
 
             escritura += "<f" + (n.n) + ">\"];\n";

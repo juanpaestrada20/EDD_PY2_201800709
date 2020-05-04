@@ -5,30 +5,39 @@
  */
 package Clases;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author juanpa
  */
 public class Usuario {
-    private int carnet;
+
+    private long carnet;
     private String nombre;
     private String apellido;
     private String carrera;
     private String contrasena;
+    private String md5;
 
-    public Usuario(int carnet, String nombre, String apellido, String carrera, String contrasena) {
+    public Usuario(long carnet, String nombre, String apellido, String carrera, String contrasena) {
         this.carnet = carnet;
         this.nombre = nombre;
         this.apellido = apellido;
         this.carrera = carrera;
         this.contrasena = contrasena;
+        this.md5 = encriptar(contrasena);
     }
 
-    public int getCarnet() {
+    public long getCarnet() {
         return carnet;
     }
 
-    public void setCarnet(int carnet) {
+    public void setCarnet(long carnet) {
         this.carnet = carnet;
     }
 
@@ -62,7 +71,34 @@ public class Usuario {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+        this.md5 = encriptar(contrasena);
     }
-    
-    
+
+    public String getMD5() {
+        return md5;
+    }
+
+    public void setMD5(String md) {
+        this.md5 = md5;
+    }
+
+    private String encriptar(String pass) {
+        MessageDigest m = null;
+        try {
+            m = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        m.reset();
+        m.update(pass.getBytes());
+        byte[] digest = m.digest();
+        BigInteger bigInt = new BigInteger(1, digest);
+        String hashtext = bigInt.toString(16);
+        
+        while (hashtext.length() < 32) {
+            hashtext = "0" + hashtext;
+        }
+        System.out.println(hashtext);
+        return hashtext;
+    }
 }

@@ -291,6 +291,19 @@ public class AVLTree {
             deleteLibro2(n.right, libro);
         }
     }
+    
+    public void deleteUserBooks(long carnet){
+        deleteBooks(root, carnet);
+    }
+    
+    private void deleteBooks(AVLNode n, long carnet){
+        if(n != null){
+            deleteBooks(n.left, carnet);
+            n.libros.deleteUserBooks(carnet);
+            deleteBooks(n.right, carnet);
+        }
+    }
+    
     // GRAFICAR
     private String createTree(AVLNode n, String escritura) {
         if (n != null) {
