@@ -276,6 +276,9 @@ public class AVLTree {
                 }
             }
             busqueda = searchBooks2(n.left, libro);
+            if(busqueda != null){
+                return busqueda;
+            }
             busqueda = searchBooks2(n.right, libro);
             return busqueda;
         }

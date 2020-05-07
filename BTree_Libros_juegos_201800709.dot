@@ -1,0 +1,7 @@
+digraph G {
+node [shape = record,height=.1 color=black fillcolor=salmon style=filled];
+labelloc="t";
+label="Libros de juegos";
+node1[label = "<f0> |jugo\n57313168\njuegos\n201800709|<f1>"];
+
+}

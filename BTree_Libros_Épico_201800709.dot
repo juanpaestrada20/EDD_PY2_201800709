@@ -1,0 +1,11 @@
+digraph G {
+node [shape = record,height=.1 color=black fillcolor=salmon style=filled];
+labelloc="t";
+label="Libros de Épico";
+node1[label = "<f0> |Cómo educar la voluntad\n10809\nÉpico\n201800709|<f1>"];
+node2[label = "<f0> |Educar el carácter\n10807\nÉpico\n201800709|<f1> |Educar los sentimientos\n10808\nÉpico\n201800709|<f2>"];
+"node1":f0->"node2";
+node3[label = "<f0> |Introducción a la vida política\n10874\nÉpico\n201800709|<f1> |El lenguaje y la vida humana\n10875\nÉpico\n201800709|<f2> |Sociología de la educación\n10876\nÉpico\n201800709|<f3> |Future libraries, future catalogues\n13550\nÉpico\n201800709|<f4> |La revalorización del art nouveau en Guatemala (un caso : la casa Fénix)\n13551\nÉpico\n201800709|<f5>"];
+"node1":f1->"node3";
+
+}

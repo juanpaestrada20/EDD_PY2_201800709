@@ -484,6 +484,29 @@ public class Biblioteca extends javax.swing.JFrame {
                 }
             }
             limpiar();
+        }else if (rbModificar.isSelected()){
+            Libro book = library.searchBooks(isbn);
+            if(book.getCarnet() == usuarioLogeado.getCarnet()){
+                Libro reemplazo = new Libro(isbn, title, author, editorial, year, edition, category, lenguage, carnet);
+                library.deleteBook(isbn);
+                usuarioLogeado.getLibros().deleteBook(isbn);
+                library.insertBook(reemplazo);
+                usuarioLogeado.agregarLibro(reemplazo);
+                limpiar();
+            }else{
+                JOptionPane.showMessageDialog(null, "No puede modificar el libro, no es de su biblioteca", "Error en la modificación del libro", JOptionPane.ERROR_MESSAGE);
+                limpiar();
+            }
+        }else{
+            Libro book = library.searchBooks(isbn);
+            if(book.getCarnet() == usuarioLogeado.getCarnet()){
+                library.deleteBook(isbn);
+                usuarioLogeado.getLibros().deleteBook(isbn);
+                limpiar();
+            }else{
+                JOptionPane.showMessageDialog(null, "No puede eliminar el libro, no es de su biblioteca", "Error en la eliminación del libro", JOptionPane.ERROR_MESSAGE);
+                limpiar();
+            }
         }
         jPanel1.updateUI();
         jScrollPane1.updateUI();
@@ -561,7 +584,7 @@ public class Biblioteca extends javax.swing.JFrame {
             lblImagen.setIcon(null);
             lblImagen.updateUI();
             String categoria = txtCategorySearch.getText();
-            usuarioLogeado.getLibros().getBooks(categoria, "");
+            library.getBooks(categoria, "");
             String rutaImagen = "BTree_Libros_" + categoria + "_.png";
             image = new ImageIcon(rutaImagen);
             lblImagen.setIcon(image);
@@ -711,7 +734,11 @@ public class Biblioteca extends javax.swing.JFrame {
     private void cbxResultsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxResultsItemStateChanged
         // TODO add your handling code here:
         if (cbxResults.getSelectedIndex() > 0) {
-            System.out.println(cbxResults.getSelectedItem());
+            System.out.println(cbxResults.getSelectedItem().toString());
+            String [] vector = cbxResults.getSelectedItem().toString().split(";");
+            Long isbn= Long.parseLong(vector[1]);
+            Libro book = library.searchBooks(isbn);
+            colorcarCampos(book);
         }
     }//GEN-LAST:event_cbxResultsItemStateChanged
 
@@ -737,9 +764,19 @@ public class Biblioteca extends javax.swing.JFrame {
     private boolean isLong(String numero) {
         try {
             Long.parseLong(numero);
+            return true;
+        } catch (NumberFormatException e) {
+            isInteger(numero);
+            return false;
+        }
+    }
+    
+    private boolean isInteger(String numero) {
+        try {
             Integer.parseInt(numero);
             return true;
         } catch (NumberFormatException e) {
+            
             return false;
         }
     }
