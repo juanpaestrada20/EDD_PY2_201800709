@@ -1,0 +1,15 @@
+digraph G {
+node [shape = record,height=.1 color=black fillcolor=salmon style=filled];
+labelloc="t";
+label="Libros de Consulta";
+node1[label = "<f0> |Planeación estratégica aplicada\n10768\nConsulta\n201800709|<f1> |El camino y la meta\n10831\nConsulta\n201800709|<f2> |Las ventas en el mundo actual\n10907\nConsulta\n201800709|<f3>"];
+node2[label = "<f0> |Curso de derecho constitucional\n10763\nConsulta\n201800709|<f1> |Canales de comercialización\n10765\nConsulta\n201800709|<f2>"];
+"node1":f0->"node2";
+node3[label = "<f0> |Marketing\n10770\nConsulta\n201800709|<f1> |Relación de la vida y virtudes del beato Hno. Pedro de San José de Betancurt\n10830\nConsulta\n201800709|<f2>"];
+"node1":f1->"node3";
+node4[label = "<f0> |Gestión de la calidad en pequeñas y medianas empresas; memoria del proyecto copatrocinado por OEA /GTZ, 1982-2000\n10838\nConsulta\n201800709|<f1> |El mapa; una guía para el mejoramiento de la calidad en la pequeña y mediana empresa, basada en el método de W. Edwards Deming\n10839\nConsulta\n201800709|<f2>"];
+"node1":f2->"node4";
+node5[label = "<f0> |Problemas y métodos de investigación en la historia de la filosofía\n10910\nConsulta\n201800709|<f1> |La Educación de los padres\n10912\nConsulta\n201800709|<f2> |La Odisea\n10916\nConsulta\n201800709|<f3>"];
+"node1":f3->"node5";
+
+}

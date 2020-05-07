@@ -5,6 +5,7 @@
  */
 package Inicio;
 
+import Administrador.MenuPrincipal;
 import Clases.Usuario;
 import DataStructures.AVLTree;
 import DataStructures.HashTable;
@@ -239,7 +240,7 @@ public class InicioSesion extends javax.swing.JFrame {
                 String lastName = (String) user.get("Apellido");
                 String career = (String) user.get("Carrera");
                 String pass = (String) user.get("Password");
-                System.out.println(carnet + " - " + firstName);
+                System.out.println(carnet + " - " + firstName + " - " + pass);
                 userTable.insertUser(new Usuario(carnet, firstName, lastName, career, pass));
             }
             userTable.generateTable();
@@ -262,6 +263,7 @@ public class InicioSesion extends javax.swing.JFrame {
         // TODO add your handling code here:
         long carnetLogin = Long.parseLong(txtCarnet.getText());
         Usuario userLogin = userTable.search(carnetLogin);
+        usuarioLogeado = null;
         if (userLogin == null) {
             System.out.println("No se encontro el usuario");
             JOptionPane.showMessageDialog(null, "Usuario y/o Contraseña Incorrecta", "Credenciales Inválidas", JOptionPane.ERROR_MESSAGE);
@@ -270,6 +272,10 @@ public class InicioSesion extends javax.swing.JFrame {
             if (userLogin.getContrasena().equals(passwordLogin)) {
                 System.out.println("Bienvenido " + userLogin.getNombre());
                 usuarioLogeado = userLogin;
+                MenuPrincipal menu = new MenuPrincipal();
+                menu.setVisible(true);
+                dispose();
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario y/o Contraseña Incorrecta", "Credenciales Inválidas", JOptionPane.ERROR_MESSAGE);
             }

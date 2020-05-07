@@ -80,12 +80,20 @@ public class List {
                     prev.next = null;
                     size--;
                     return;
-                }else{
-                   prev.next= current.next;
-                   size--;
-                   return;
+                } else {
+                    prev.next = current.next;
+                    size--;
+                    return;
                 }
             }
+        }
+    }
+
+    public void deleteCategory(String category) {
+        ListNode aux = first;
+        while (aux != null) {
+            aux.user.getLibros().eliminarCategoria(category);
+            aux = aux.next;
         }
     }
 }

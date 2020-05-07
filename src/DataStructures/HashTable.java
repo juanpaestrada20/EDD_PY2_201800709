@@ -98,10 +98,10 @@ public class HashTable {
             if (user != null) {
                 if (user.getCarnet() == carnet) {
                     library.deleteUserBooks(carnet);
-                    if(usersList[arrayIndexHash].getSize() > 1){
+                    if (usersList[arrayIndexHash].getSize() > 1) {
                         usersList[arrayIndexHash].deleteUser(carnet);
                         break;
-                    }else{
+                    } else {
                         usersList[arrayIndexHash] = null;
                         break;
                     }
@@ -118,10 +118,14 @@ public class HashTable {
 
     }
 
-    private void deleteUserBooks(Usuario user){
-        
+    public void deleteUserCategory(String category) {
+        for (int i = 0; i < size; i++) {
+            if (usersList[i] != null) {
+                usersList[i].deleteCategory(category);
+            }
+        }
     }
-    
+
     private String createTable(String escritura) {
         escritura += "node1[height=55 label=\"";
         for (int i = 0; i < size; i++) {

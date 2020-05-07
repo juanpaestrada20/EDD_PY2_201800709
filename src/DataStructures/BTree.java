@@ -456,11 +456,11 @@ public class BTree {
         return escritura;
     }
 
-    public void generateDotTree() {
+    public void generateDotTree(String proper) {
         String escritura = "";
         contadorNodos = 0;
         StringBuilder resultado = new StringBuilder();
-        String rdot = "BTree_Libros_" + root.keys[0].getCategoria() + ".dot";
+        String rdot = "BTree_Libros_" + root.keys[0].getCategoria() + "_" + proper +".dot";
         BTreeNode temp = root;
         resultado.append("digraph G {\nnode [shape = record,height=.1 color=black fillcolor=salmon style=filled];\n");
         resultado.append("labelloc=\"t\";\nlabel=\"Libros de " + root.keys[0].getCategoria() +"\";\n");

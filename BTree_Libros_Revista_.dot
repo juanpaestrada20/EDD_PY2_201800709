@@ -1,0 +1,11 @@
+digraph G {
+node [shape = record,height=.1 color=black fillcolor=salmon style=filled];
+labelloc="t";
+label="Libros de Revista";
+node1[label = "<f0> |ISO 9000; auditorías internas de la calidad en la pequeña y mediana empresa\n10828\nRevista\n201800709|<f1>"];
+node2[label = "<f0> |Las Claves de la eficacia empresarial; un reto a los empresarios Españoles\n10826\nRevista\n201800709|<f1> |La Fe explicada / Leo J. Trese.\n10827\nRevista\n201800709|<f2>"];
+"node1":f0->"node2";
+node3[label = "<f0> |Introducción al estudio de la música\n10894\nRevista\n201800709|<f1> |Sociología de la educación\n10896\nRevista\n201800709|<f2> |El hombre y el dinero: (vistos a la luz de la enseñanza de la Biblia y el Evangelio) / Jacques Ellul ; versión castellana Juan Gil Albert.\n10902\nRevista\n201800709|<f3>"];
+"node1":f1->"node3";
+
+}

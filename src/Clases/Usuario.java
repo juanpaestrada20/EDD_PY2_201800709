@@ -5,6 +5,7 @@
  */
 package Clases;
 
+import DataStructures.AVLTree;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -23,6 +24,7 @@ public class Usuario {
     private String carrera;
     private String contrasena;
     private String md5;
+    private AVLTree librosPersonales;
 
     public Usuario(long carnet, String nombre, String apellido, String carrera, String contrasena) {
         this.carnet = carnet;
@@ -31,6 +33,7 @@ public class Usuario {
         this.carrera = carrera;
         this.contrasena = contrasena;
         this.md5 = encriptar(contrasena);
+        this.librosPersonales = new AVLTree();
     }
 
     public long getCarnet() {
@@ -72,6 +75,14 @@ public class Usuario {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
         this.md5 = encriptar(contrasena);
+    }
+    
+    public AVLTree getLibros() {
+        return librosPersonales;
+    }
+
+    public void agregarLibro(Libro book) {
+        librosPersonales.insertBook(book);
     }
 
     public String getMD5() {

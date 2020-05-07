@@ -11,11 +11,11 @@ package DataStructures;
  */
 public class AVLNode {
 
-    String categoria;
-    AVLNode left;
-    AVLNode right;
-    int heigth;
-    BTree libros;
+    public String categoria;
+    public AVLNode left;
+    public AVLNode right;
+    public int heigth;
+    public BTree libros;
 
     public AVLNode(String categoria) {
         this.categoria = categoria;

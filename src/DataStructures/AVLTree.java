@@ -9,6 +9,7 @@ import Clases.Libro;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,6 +83,7 @@ public class AVLTree {
     private AVLNode insert(AVLNode n, String key) {
         // INSERCION DE ARBOL BINARIO NORMAL
         if (n == null) {
+            System.out.println("Inserto categoria" + key);
             return (new AVLNode(key));
         }
         // KEY < N.CATEGORIA
@@ -149,8 +151,7 @@ public class AVLTree {
             n.left = deleteNode(n.left, key);
         } else if (key.compareToIgnoreCase(n.categoria) > 0) {
             n.right = deleteNode(n.right, key);
-        } 
-        // NODO ENCONTRADO PARA ELIMINAR
+        } // NODO ENCONTRADO PARA ELIMINAR
         else {
             if (n.left == null || n.right == null) {
                 // NODO SIN HIJOS O UN HIJO
@@ -209,101 +210,145 @@ public class AVLTree {
 
         return n;
     }
-    
+
     // AGREGAR LIBROS A CATEGORIAS
-    public void insertBook(Libro book){
+    public void insertBook(Libro book) {
         AVLNode temp = searchCategory(book.getCategoria());
-        if(temp != null){
+        if (temp != null) {
             System.out.println("Se agrego libro");
             temp.libros.insert(book);
-        }else{
+        } else {
             this.agregarCategoria(book.getCategoria());
             temp = searchCategory(book.getCategoria());
             temp.libros.insert(book);
             System.out.println("Se creo categoria");
         }
     }
-    
+
     // BUSQUEDAS
-    public AVLNode searchCategory(String nombre){
-        if(root != null){
-           return search(root, nombre);
+    public AVLNode searchCategory(String nombre) {
+        if (root != null) {
+            return search(root, nombre);
         }
         return null;
     }
-    
-    private AVLNode search(AVLNode n, String nombre){
-        if(n == null){
+
+    private AVLNode search(AVLNode n, String nombre) {
+        if (n == null) {
             return null;
-        }else if(n.categoria.equalsIgnoreCase(nombre)){
+        } else if (n.categoria.equalsIgnoreCase(nombre)) {
             return n;
-        }else if(n.categoria.compareToIgnoreCase(nombre) > 0){
+        } else if (n.categoria.compareToIgnoreCase(nombre) > 0) {
             return search(n.left, nombre);
-        }else{
+        } else {
             return search(n.right, nombre);
         }
     }
-    
+
     // OBTENER ARBOL B DE CIERTA CATEGORIA
-    public void getBooks(String category){
+    public void getBooks(String category, String proper) {
         AVLNode temp = searchCategory(category);
-        if(temp != null){
-            temp.libros.generateDotTree();
-        }else{
+        if (temp != null) {
+            temp.libros.generateDotTree(proper);
+        } else {
             System.out.println("No tiene libros");
         }
     }
-    
-    
+
+    // BUSCAR LIBROS
+    public Libro searchBooks(long libros) {
+        AVLNode nodo = searchBooks2(root, libros);
+        if (nodo == null) {
+            return null;
+        }
+        Libro book = nodo.libros.buscarLibroISBN(libros);
+        return book;
+
+    }
+
+    private AVLNode searchBooks2(AVLNode n, long libro) {
+        if (n != null) {
+            AVLNode busqueda = n;
+            Libro book = busqueda.libros.buscarLibroISBN(libro);
+            if (book != null) {
+                if (book.getISBN() == libro) {
+                    return busqueda;
+                }
+            }
+            busqueda = searchBooks2(n.left, libro);
+            busqueda = searchBooks2(n.right, libro);
+            return busqueda;
+        }
+        return null;
+    }
+
+    public ArrayList<Libro> searchBooksbyName(String libro) {
+        ArrayList<Libro> librosEncontrados = new ArrayList<>();
+        librosEncontrados = searchBooks3(root, librosEncontrados, libro);
+        return librosEncontrados;
+    }
+
+    private ArrayList<Libro> searchBooks3(AVLNode n, ArrayList<Libro> libros, String libro) {
+        if (n != null) {
+            ArrayList<Libro> busqueda = n.libros.buscarLibroParteNombre(libro);
+            if (busqueda != null) {
+                libros.addAll(n.libros.buscarLibroParteNombre(libro));
+            }
+            libros = searchBooks3(n.left, libros, libro);
+            libros = searchBooks3(n.right, libros, libro);
+        }
+        return libros;
+    }
+
     // ELIMINAR LIBRO DE CATEGORIA
-    public void deleteBook(long ISBN){
+    public void deleteBook(long ISBN) {
         AVLNode temp = root;
         deleteLibro(temp, ISBN);
     }
-    
-    public void deleteBookName(String name){
+
+    public void deleteBookName(String name) {
         AVLNode temp = root;
         deleteLibro2(temp, name);
     }
-    
+
     // POR ISBN
-    private void deleteLibro(AVLNode n, long libro){
-        if(n != null){
+    private void deleteLibro(AVLNode n, long libro) {
+        if (n != null) {
             deleteLibro(n.left, libro);
             Libro aux = n.libros.buscarLibroISBN(libro);
-            if(aux != null){
+            if (aux != null) {
                 n.libros.eliminarLibro(libro);
                 return;
             }
             deleteLibro(n.right, libro);
         }
     }
-    
+
     // POR NOMBRE
-    private void deleteLibro2(AVLNode n, String libro){
-        if(n != null){
+    private void deleteLibro2(AVLNode n, String libro) {
+        if (n != null) {
             deleteLibro2(n.left, libro);
             Libro aux = n.libros.buscarLibroNombre(libro);
-            if(aux != null){
+            if (aux != null) {
                 deleteLibro(n, aux.getISBN());
                 return;
             }
             deleteLibro2(n.right, libro);
         }
     }
-    
-    public void deleteUserBooks(long carnet){
+
+    public void deleteUserBooks(long carnet) {
         deleteBooks(root, carnet);
     }
-    
-    private void deleteBooks(AVLNode n, long carnet){
-        if(n != null){
+
+    private void deleteBooks(AVLNode n, long carnet) {
+        if (n != null) {
             deleteBooks(n.left, carnet);
             n.libros.deleteUserBooks(carnet);
             deleteBooks(n.right, carnet);
         }
     }
-    
+
     // GRAFICAR
     private String createTree(AVLNode n, String escritura) {
         if (n != null) {
@@ -348,75 +393,81 @@ public class AVLTree {
         return escritura;
     }
 
-    public void generateDotTree() {
-        String escritura = "";
-        StringBuilder resultado = new StringBuilder();
-        String rdot = "AVL_Categorias.dot";
-        AVLNode temp = root;
-        resultado.append("digraph G{\nrankdir=TB;\nnode [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];\n");
-        escritura = createTree(temp, escritura);
-        resultado.append(escritura);
-        resultado.append("\n}");
-        generateDot(rdot, resultado.toString());
+    public void generateDotTree(String proper) {
+        if (root != null) {
+            String escritura = "";
+            StringBuilder resultado = new StringBuilder();
+            String rdot = "AVL_Categorias" + proper + ".dot";
+            AVLNode temp = root;
+            resultado.append("digraph G{\nrankdir=TB;\nnode [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];\n");
+            escritura = createTree(temp, escritura);
+            resultado.append(escritura);
+            resultado.append("\n}");
+            generateDot(rdot, resultado.toString());
+        }
     }
-    
-    public void generatePreOrder(){
+
+    public void generatePreOrder(String proper) {
         String escritura = "";
         StringBuilder resultado = new StringBuilder();
-        String rdot = "AVL_Categorias_PreOrder.dot";
+        String rdot = "AVL_Categorias_PreOrder" + proper + ".dot";
         AVLNode temp = root;
         resultado.append("digraph G{\nrankdir=LR;\nnode [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];\n");
         escritura = createTreePreOrder(temp, escritura);
-        escritura = escritura.substring(0, escritura.length()-2);
+        escritura = escritura.substring(0, escritura.length() - 2);
         resultado.append(escritura);
         resultado.append("\n}");
         generateDot(rdot, resultado.toString());
     }
-    
-    public void generateInOrder(){
+
+    public void generateInOrder(String proper) {
         String escritura = "";
         StringBuilder resultado = new StringBuilder();
-        String rdot = "AVL_Categorias_InOrder.dot";
+        String rdot = "AVL_Categorias_InOrder" + proper + ".dot";
         AVLNode temp = root;
         resultado.append("digraph G{\nrankdir=LR;\nnode [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];\n");
         escritura = createTreeInOrder(temp, escritura);
-        escritura = escritura.substring(0, escritura.length()-2);
+        escritura = escritura.substring(0, escritura.length() - 2);
         resultado.append(escritura);
         resultado.append("\n}");
         generateDot(rdot, resultado.toString());
     }
-    
-    public void generatePostOrder(){
+
+    public void generatePostOrder(String proper) {
         String escritura = "";
         StringBuilder resultado = new StringBuilder();
-        String rdot = "AVL_Categorias_PostOrder.dot";
+        String rdot = "AVL_Categorias_PostOrder" + proper + ".dot";
         AVLNode temp = root;
         resultado.append("digraph G{\nrankdir=LR;\nnode [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];\n");
         escritura = createTreePostOrder(temp, escritura);
-        escritura = escritura.substring(0, escritura.length()-2);
+        escritura = escritura.substring(0, escritura.length() - 2);
         resultado.append(escritura);
         resultado.append("\n}");
         generateDot(rdot, resultado.toString());
     }
 
     private void generateDot(String rdot, String grafo) {
-
         FileWriter writer = null;
         try {
             // CREACION DE ARCHIVO CON EXTENSION .DOT
             File fileDot = new File(rdot);
             fileDot.setWritable(true);
+            if (fileDot.exists()) {
+                fileDot.delete();
+                fileDot = new File(rdot);
+                fileDot.setReadable(true, false);
+                fileDot.setWritable(true);
+            }
             String rutaPng = fileDot.getAbsolutePath().substring(0, fileDot.getAbsolutePath().length() - 4) + ".png";
-            File file = new File(rdot);
-            writer = new FileWriter(file);
+
+            writer = new FileWriter(fileDot);
             writer.write(grafo);
             writer.close();
 
             // CONSTRUCCION DEL COMANDO PARA GENERAR IMAGEN
             ProcessBuilder pBuilder;
-            pBuilder = new ProcessBuilder("dot", "-Tpng", "-o", rutaPng, fileDot.getAbsolutePath());
+            pBuilder = new ProcessBuilder("dot", "-Tpng", fileDot.getAbsolutePath(), "-o", rutaPng);
             pBuilder.start();
-
         } catch (IOException ex) {
             Logger.getLogger(AVLTree.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

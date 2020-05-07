@@ -1,9 +1,11 @@
 digraph G{
 rankdir=TB;
 node [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];
-Informativos->Drama
-Drama->Consulta
-Drama->Ensayo
+Informativos->Consulta
+Consulta->Biografia
+Biografia->a
+Consulta->Ensayo
+Ensayo->Drama
 Informativos->Lírico
 Lírico->Literatura
 Lírico->Sagas

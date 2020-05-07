@@ -18,9 +18,9 @@ public class Libro {
     private int edicion;
     private String categoria;
     private String idioma;
-    private int carnet;
+    private long carnet;
 
-    public Libro(long ISBN, String titulo, String Autor, String Editorial, int anio, int edicion, String categoria, String idioma, int carnet) {
+    public Libro(long ISBN, String titulo, String Autor, String Editorial, int anio, int edicion, String categoria, String idioma, long carnet) {
         this.ISBN = ISBN;
         this.titulo = titulo;
         this.Autor = Autor;
@@ -96,11 +96,11 @@ public class Libro {
         this.idioma = idioma;
     }
 
-    public int getCarnet() {
+    public long getCarnet() {
         return carnet;
     }
 
-    public void setCarnet(int carnet) {
+    public void setCarnet(long carnet) {
         this.carnet = carnet;
     }
     
