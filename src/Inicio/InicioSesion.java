@@ -5,7 +5,9 @@
  */
 package Inicio;
 
+import Administrador.Categorias;
 import Administrador.MenuPrincipal;
+import Clases.Libro;
 import Clases.Usuario;
 import DataStructures.AVLTree;
 import DataStructures.HashTable;
@@ -15,6 +17,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,14 +38,21 @@ public class InicioSesion extends javax.swing.JFrame {
     public static HashTable userTable = new HashTable();
     public static AVLTree library = new AVLTree();
     public static Usuario usuarioLogeado;
-
+    public static ArrayList<Usuario> UsuariosAgregados = new ArrayList<>();
+    public static ArrayList<Usuario> UsuariosEliminados = new ArrayList<>();
+    public static ArrayList<Usuario> UsuariosModficados = new ArrayList<>();
+    public static ArrayList<Libro> LibrosAgregados = new ArrayList<>();
+    public static ArrayList<Libro> LibrosModificados = new ArrayList<>();
+    public static ArrayList<Long> LibrosEliminados = new ArrayList<>();
+    public static ArrayList<String> CategoriasAgregadas = new ArrayList<>();
+    public static ArrayList<String> CategoriasEliminadas = new ArrayList<>();
+    
     /**
      * Creates new form InicioSesion
      */
     public InicioSesion() {
         initComponents();
         setLocationRelativeTo(null);
-        data = "\"DATA\": [\n]";
 
     }
 
@@ -240,8 +250,10 @@ public class InicioSesion extends javax.swing.JFrame {
                 String lastName = (String) user.get("Apellido");
                 String career = (String) user.get("Carrera");
                 String pass = (String) user.get("Password");
+                Usuario nuevo = new Usuario(carnet, firstName, lastName, career, pass);
                 System.out.println(carnet + " - " + firstName + " - " + pass);
-                userTable.insertUser(new Usuario(carnet, firstName, lastName, career, pass));
+                UsuariosAgregados.add(nuevo);
+                userTable.insertUser(nuevo);
             }
             userTable.generateTable();
         } catch (FileNotFoundException ex) {

@@ -28,7 +28,7 @@ public class BTree {
         root = new BTreeNode(t, true);
         this.t = t;
     }
-    
+
     private ArrayList<Long> buscarLibroUsuario(long k) {
         ArrayList<Long> libros = new ArrayList<Long>();
         libros = searchBook3(root, k, libros);
@@ -115,25 +115,30 @@ public class BTree {
 
     }
 
-    private void recorrerInOrder() {
-        if (root != null) {
-            InOrder(root);
+    public ArrayList<Libro> getLibros() {
+        if (root == null) {
+            return null;
+        } else {
+            ArrayList<Libro> libros = new ArrayList<>();
+            libros = InOrder(root, libros);
+            return libros;
         }
     }
 
-    private void InOrder(BTreeNode n) {
+    private ArrayList<Libro> InOrder(BTreeNode n, ArrayList<Libro> libros) {
         if (n != null) {
             int i;
             for (i = 0; i < n.n; i++) {
                 if (!n.leaf) {
-                    InOrder(n.C[i]);
+                    libros = InOrder(n.C[i], libros);
                 }
-                System.out.println(n.keys[i].getTitulo() + " -> ");
+                libros.add(n.keys[i]);
             }
             if (!n.leaf) {
-                InOrder(n.C[i]);
+                libros = InOrder(n.C[i], libros);
             }
         }
+        return libros;
     }
 
     public Libro buscarLibroISBN(long k) {
@@ -425,8 +430,8 @@ public class BTree {
             }
         }
     }
-    
-    public void deleteUserBooks(long carnet){
+
+    public void deleteUserBooks(long carnet) {
         ArrayList<Long> libros = buscarLibroUsuario(carnet);
         for (Long codigo : libros) {
             eliminarLibro(codigo);
@@ -440,7 +445,7 @@ public class BTree {
             int nodo = contadorNodos;
             escritura += "node" + contadorNodos + "[label = \"";
             for (int i = 0; i < n.n; i++) {
-                escritura += "<f" + i + "> |" + n.keys[i].getTitulo() + "\\n"+ n.keys[i].getISBN() + "\\n"+ n.keys[i].getCategoria() + "\\n"+ n.keys[i].getCarnet()+ "|";
+                escritura += "<f" + i + "> |" + n.keys[i].getTitulo() + "\\n" + n.keys[i].getISBN() + "\\n" + n.keys[i].getCategoria() + "\\n" + n.keys[i].getCarnet() + "|";
             }
 
             escritura += "<f" + (n.n) + ">\"];\n";
@@ -460,10 +465,10 @@ public class BTree {
         String escritura = "";
         contadorNodos = 0;
         StringBuilder resultado = new StringBuilder();
-        String rdot = "BTree_Libros_" + root.keys[0].getCategoria() + "_" + proper +".dot";
+        String rdot = "BTree_Libros_" + root.keys[0].getCategoria() + "_" + proper + ".dot";
         BTreeNode temp = root;
         resultado.append("digraph G {\nnode [shape = record,height=.1 color=black fillcolor=salmon style=filled];\n");
-        resultado.append("labelloc=\"t\";\nlabel=\"Libros de " + root.keys[0].getCategoria() +"\";\n");
+        resultado.append("labelloc=\"t\";\nlabel=\"Libros de " + root.keys[0].getCategoria() + "\";\n");
         escritura = createTree(temp, escritura);
         resultado.append(escritura);
         resultado.append("\n}");

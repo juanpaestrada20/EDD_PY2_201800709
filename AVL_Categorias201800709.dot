@@ -5,11 +5,10 @@ Informativos->Consulta
 Consulta->Biografia
 Consulta->Ensayo
 Ensayo->Drama
-Informativos->Revista
-Revista->Lírico
+Ensayo->Epico
+Informativos->Lírico
 Lírico->Literatura
-Lírico->prueba
+Lírico->Revista
 Revista->Sagas
-Sagas->Épico
 
 }

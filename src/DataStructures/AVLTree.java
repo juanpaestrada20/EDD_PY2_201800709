@@ -5,6 +5,7 @@
  */
 package DataStructures;
 
+import Administrador.Categorias;
 import Clases.Libro;
 import java.io.File;
 import java.io.FileWriter;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static Inicio.InicioSesion.CategoriasAgregadas;
 /**
  *
  * @author juanp
@@ -219,6 +220,7 @@ public class AVLTree {
             temp.libros.insert(book);
         } else {
             this.agregarCategoria(book.getCategoria());
+            CategoriasAgregadas.add(book.getCategoria());
             temp = searchCategory(book.getCategoria());
             temp.libros.insert(book);
             System.out.println("Se creo categoria");
@@ -276,7 +278,7 @@ public class AVLTree {
                 }
             }
             busqueda = searchBooks2(n.left, libro);
-            if(busqueda != null){
+            if (busqueda != null) {
                 return busqueda;
             }
             busqueda = searchBooks2(n.right, libro);
@@ -301,6 +303,15 @@ public class AVLTree {
             libros = searchBooks3(n.right, libros, libro);
         }
         return libros;
+    }
+
+    public ArrayList<Libro> getBooksFromCategory(String category) {
+        AVLNode categoria = searchCategory(category);
+        if (categoria == null) {
+            return null;
+        } else {
+            return categoria.libros.getLibros();
+        }
     }
 
     // ELIMINAR LIBRO DE CATEGORIA

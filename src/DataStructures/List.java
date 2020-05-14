@@ -70,7 +70,7 @@ public class List {
                 return;
             } // ELIMINAR EN MEDIO
             else {
-                while (current != null && current.user.getCarnet() == carnet) {
+                while (current.next != null && current.user.getCarnet() != carnet) {
                     prev = current;
                     current = current.next;
                 }

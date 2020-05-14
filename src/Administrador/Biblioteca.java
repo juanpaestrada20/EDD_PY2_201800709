@@ -10,6 +10,12 @@ import DataStructures.AVLNode;
 import Inicio.InicioSesion;
 import static Inicio.InicioSesion.library;
 import static Inicio.InicioSesion.usuarioLogeado;
+import static Inicio.InicioSesion.LibrosAgregados;
+import static Inicio.InicioSesion.LibrosModificados;
+import static Inicio.InicioSesion.LibrosEliminados;
+import static Inicio.InicioSesion.CategoriasAgregadas;
+import static Inicio.InicioSesion.CategoriasEliminadas;
+import static Inicio.InicioSesion.userTable;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.Icon;
@@ -323,7 +329,9 @@ public class Biblioteca extends javax.swing.JFrame {
                                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txtEdition))
-                                    .addComponent(btnChangeCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnChangeCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -374,7 +382,7 @@ public class Biblioteca extends javax.swing.JFrame {
                     .addComponent(cbxResults, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearchBooks))
                 .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnOwnCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -394,8 +402,8 @@ public class Biblioteca extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGeneralBooks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnChangeCategoria))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addComponent(btnChangeCategoria)
+                            .addComponent(txtAccept)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -415,10 +423,8 @@ public class Biblioteca extends javax.swing.JFrame {
                             .addComponent(txtLenguage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10)
                             .addComponent(txtEdition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtAccept)
-                        .addGap(25, 25, 25)))
+                            .addComponent(jLabel11))))
+                .addGap(8, 8, 8)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
@@ -475,35 +481,51 @@ public class Biblioteca extends javax.swing.JFrame {
             if (node == null) {
                 library.insertBook(newBook);
                 usuarioLogeado.agregarLibro(newBook);
+                LibrosAgregados.add(newBook);
+                JOptionPane.showMessageDialog(null, "Libro agregado exitosamente!", "Libro agregado", JOptionPane.INFORMATION_MESSAGE);
+
             } else {
                 if (node.libros.buscarLibroISBN(isbn) == null) {
                     library.insertBook(newBook);
                     usuarioLogeado.agregarLibro(newBook);
+                    LibrosAgregados.add(newBook);
+                    JOptionPane.showMessageDialog(null, "Libro agregado exitosamente!", "Libro agregado", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     System.out.println("Libro ya existe");
                 }
             }
             limpiar();
-        }else if (rbModificar.isSelected()){
+        } else if (rbModificar.isSelected()) {
             Libro book = library.searchBooks(isbn);
-            if(book.getCarnet() == usuarioLogeado.getCarnet()){
+            if (book.getCarnet() == usuarioLogeado.getCarnet()) {
                 Libro reemplazo = new Libro(isbn, title, author, editorial, year, edition, category, lenguage, carnet);
                 library.deleteBook(isbn);
+                LibrosEliminados.add(isbn);
                 usuarioLogeado.getLibros().deleteBook(isbn);
                 library.insertBook(reemplazo);
                 usuarioLogeado.agregarLibro(reemplazo);
+                LibrosAgregados.add(reemplazo);
                 limpiar();
-            }else{
+                JOptionPane.showMessageDialog(null, "Libro modificado exitosamente!", "Libro modificado", JOptionPane.INFORMATION_MESSAGE);
+
+            } else {
                 JOptionPane.showMessageDialog(null, "No puede modificar el libro, no es de su biblioteca", "Error en la modificación del libro", JOptionPane.ERROR_MESSAGE);
                 limpiar();
             }
-        }else{
+        } else {
             Libro book = library.searchBooks(isbn);
-            if(book.getCarnet() == usuarioLogeado.getCarnet()){
-                library.deleteBook(isbn);
-                usuarioLogeado.getLibros().deleteBook(isbn);
-                limpiar();
-            }else{
+            if (book.getCarnet() == usuarioLogeado.getCarnet()) {
+                int i = JOptionPane.showConfirmDialog(null, "Esta seguro que desea eliminar el libro?", "Eliminar libro", JOptionPane.QUESTION_MESSAGE);
+                if (i == 0) {
+                    String respuesta = JOptionPane.showInputDialog(null, "¿Por qué lo eliminara?");
+                    System.out.println("Se elimina el libro porque " + respuesta);
+                    library.deleteBook(isbn);
+                    LibrosEliminados.add(isbn);
+                    usuarioLogeado.getLibros().deleteBook(isbn);
+                    limpiar();
+                    JOptionPane.showMessageDialog(null, "Eliminación Exitosa", "Libro eliminado", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
                 JOptionPane.showMessageDialog(null, "No puede eliminar el libro, no es de su biblioteca", "Error en la eliminación del libro", JOptionPane.ERROR_MESSAGE);
                 limpiar();
             }
@@ -585,6 +607,8 @@ public class Biblioteca extends javax.swing.JFrame {
             lblImagen.updateUI();
             String categoria = txtCategorySearch.getText();
             library.getBooks(categoria, "");
+            ArrayList<Libro> libros = library.getBooksFromCategory(categoria);
+            agregarLibros(libros);
             String rutaImagen = "BTree_Libros_" + categoria + "_.png";
             image = new ImageIcon(rutaImagen);
             lblImagen.setIcon(image);
@@ -735,8 +759,8 @@ public class Biblioteca extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (cbxResults.getSelectedIndex() > 0) {
             System.out.println(cbxResults.getSelectedItem().toString());
-            String [] vector = cbxResults.getSelectedItem().toString().split(";");
-            Long isbn= Long.parseLong(vector[1]);
+            String[] vector = cbxResults.getSelectedItem().toString().split(";");
+            Long isbn = Long.parseLong(vector[1]);
             Libro book = library.searchBooks(isbn);
             colorcarCampos(book);
         }
@@ -752,11 +776,18 @@ public class Biblioteca extends javax.swing.JFrame {
             if (rbAgregar.isSelected()) {
                 library.agregarCategoria(txtCategorySearch.getText());
                 usuarioLogeado.getLibros().agregarCategoria(txtCategorySearch.getText());
-                InicioSesion.userTable.deleteUserCategory(txtCategorySearch.getText());
+                CategoriasAgregadas.add(txtCategory.getText());
+                JOptionPane.showMessageDialog(null, "Categoria agregada exitosamente!", "Categoria agregada", JOptionPane.INFORMATION_MESSAGE);
+
             } else if (rbEliminar.isSelected()) {
-                library.eliminarCategoria(txtCategorySearch.getText());
-                usuarioLogeado.getLibros().eliminarCategoria(txtCategorySearch.getText());
-                InicioSesion.userTable.deleteUserCategory(txtCategorySearch.getText());
+                int i = JOptionPane.showConfirmDialog(null, "Esta seguro que desea eliminar la categoria?", "Eliminar categoria", JOptionPane.QUESTION_MESSAGE);
+                if (i == 0) {
+                    library.eliminarCategoria(txtCategorySearch.getText());
+                    usuarioLogeado.getLibros().eliminarCategoria(txtCategorySearch.getText());
+                    userTable.deleteUserCategory(txtCategorySearch.getText());
+                    CategoriasEliminadas.add(txtCategorySearch.getText());
+                    JOptionPane.showMessageDialog(null, "Eliminación Exitosa", "Categoria eliminada", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         }
     }//GEN-LAST:event_btnChangeCategoriaActionPerformed
@@ -770,13 +801,13 @@ public class Biblioteca extends javax.swing.JFrame {
             return false;
         }
     }
-    
+
     private boolean isInteger(String numero) {
         try {
             Integer.parseInt(numero);
             return true;
         } catch (NumberFormatException e) {
-            
+
             return false;
         }
     }
@@ -794,6 +825,7 @@ public class Biblioteca extends javax.swing.JFrame {
 
     private void agregarLibros(ArrayList<Libro> libros) {
         if (libros != null) {
+            cbxResults.removeAllItems();
             cbxResults.addItem("Resultado de Busqueda:");
             for (Libro book : libros) {
                 cbxResults.addItem(book.getTitulo() + ";" + book.getISBN());

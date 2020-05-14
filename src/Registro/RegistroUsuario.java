@@ -8,6 +8,7 @@ package Registro;
 import Clases.Usuario;
 import static Inicio.InicioSesion.data;
 import static Inicio.InicioSesion.userTable;
+import static Inicio.InicioSesion.UsuariosAgregados;
 import javax.swing.JOptionPane;
 
 /**
@@ -234,17 +235,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
             if (pas.compareTo(pas2) == 0) {
                 long carnet = Long.parseLong(txtCarnet.getText());
                 Usuario nuevo = new Usuario(carnet, txtNombre.getText(), txtApellido.getText(), txtCarrera.getText(), pas);
-
-                data = data.substring(0, data.length() - 1);
-                if (data.charAt(data.length() - 1) == ',') {
-                    data+="\n";
-                }
-                data+="{\n\"CREAR_USUARIO\": [\n";
-                data += "{\n\"Carnet\": " + nuevo.getCarnet() + ",\n\"Nombre\": \"" + nuevo.getNombre()
-                        + "\",\n\"Apellido\": \"" + nuevo.getApellido() + "\",\n\"Carrera\": \"" + nuevo.getCarrera()
-                        + "\",\n\"Password\": \"" + nuevo.getContrasena() + "\"\n}\n]\n},]";
-                System.out.println(data);
-                
+                UsuariosAgregados.add(nuevo);
                 userTable.insertUser(nuevo);
                 cleanFields();
             } else {

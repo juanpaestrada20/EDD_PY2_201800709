@@ -165,7 +165,9 @@ public class HashTable {
 
         return escritura;
     }
-
+    
+    private String ruta;
+    
     public void generateTable() {
         String escritura = "";
         StringBuilder resultado = new StringBuilder();
@@ -176,15 +178,19 @@ public class HashTable {
         resultado.append("\n}");
         generateDot(rdot, resultado.toString());
     }
+    
+    public String getRuta(){
+        return ruta;
+    }
 
     private void generateDot(String rdot, String grafo) {
-
         FileWriter writer = null;
         try {
             // CREACION DE ARCHIVO CON EXTENSION .DOT
             File fileDot = new File(rdot);
             fileDot.setWritable(true);
-            String rutaPng = fileDot.getAbsolutePath().substring(0, fileDot.getAbsolutePath().length() - 4) + ".png";
+            String rutaPng = fileDot.getAbsolutePath().substring(0, fileDot.getAbsolutePath().length() - 4) + ".jpg";
+            ruta = rutaPng;
             File file = new File(rdot);
             writer = new FileWriter(file);
             writer.write(grafo);
@@ -192,7 +198,7 @@ public class HashTable {
 
             // CONSTRUCCION DEL COMANDO PARA GENERAR IMAGEN
             ProcessBuilder pBuilder;
-            pBuilder = new ProcessBuilder("dot", "-Tpng", "-o", rutaPng, fileDot.getAbsolutePath());
+            pBuilder = new ProcessBuilder("dot", "-Tjpg", "-o", rutaPng, fileDot.getAbsolutePath());
             pBuilder.start();
 
         } catch (IOException ex) {
