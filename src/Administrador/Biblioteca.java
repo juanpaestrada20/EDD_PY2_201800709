@@ -515,7 +515,7 @@ public class Biblioteca extends javax.swing.JFrame {
         } else {
             Libro book = library.searchBooks(isbn);
             if (book.getCarnet() == usuarioLogeado.getCarnet()) {
-                int i = JOptionPane.showConfirmDialog(null, "Esta seguro que desea eliminar el libro?", "Eliminar libro", JOptionPane.QUESTION_MESSAGE);
+                int i = JOptionPane.showConfirmDialog(null, "Esta seguro que desea eliminar el libro?", "Eliminar libro", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     String respuesta = JOptionPane.showInputDialog(null, "¿Por qué lo eliminara?");
                     System.out.println("Se elimina el libro porque " + respuesta);
@@ -780,7 +780,7 @@ public class Biblioteca extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Categoria agregada exitosamente!", "Categoria agregada", JOptionPane.INFORMATION_MESSAGE);
 
             } else if (rbEliminar.isSelected()) {
-                int i = JOptionPane.showConfirmDialog(null, "Esta seguro que desea eliminar la categoria?", "Eliminar categoria", JOptionPane.QUESTION_MESSAGE);
+                int i = JOptionPane.showConfirmDialog(null, "Esta seguro que desea eliminar la categoria?", "Eliminar categoria", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     library.eliminarCategoria(txtCategorySearch.getText());
                     usuarioLogeado.getLibros().eliminarCategoria(txtCategorySearch.getText());

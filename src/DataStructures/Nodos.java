@@ -9,6 +9,14 @@ package DataStructures;
  *
  * @author juanp
  */
-public class LinkedListNode {
+public class Nodos {
+    public String ip;
+    public Nodos next;
+
+    public Nodos(String ip) {
+        this.ip = ip;
+        this.next = null;
+    }
+    
     
 }

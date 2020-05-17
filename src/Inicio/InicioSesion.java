@@ -7,10 +7,13 @@ package Inicio;
 
 import Administrador.Categorias;
 import Administrador.MenuPrincipal;
+import Administrador.Sincronizar;
 import Clases.Libro;
 import Clases.Usuario;
 import DataStructures.AVLTree;
+import DataStructures.Blockchain;
 import DataStructures.HashTable;
+import DataStructures.RedList;
 import Registro.RegistroUsuario;
 import java.awt.Color;
 import java.io.File;
@@ -38,6 +41,8 @@ public class InicioSesion extends javax.swing.JFrame {
     public static HashTable userTable = new HashTable();
     public static AVLTree library = new AVLTree();
     public static Usuario usuarioLogeado;
+    public static Blockchain blockchain = new Blockchain();
+    public static RedList listaUsuarios = new RedList();
     public static ArrayList<Usuario> UsuariosAgregados = new ArrayList<>();
     public static ArrayList<Usuario> UsuariosEliminados = new ArrayList<>();
     public static ArrayList<Usuario> UsuariosModficados = new ArrayList<>();
@@ -53,7 +58,7 @@ public class InicioSesion extends javax.swing.JFrame {
     public InicioSesion() {
         initComponents();
         setLocationRelativeTo(null);
-
+        data = "HOlas";
     }
 
     /**
@@ -74,6 +79,7 @@ public class InicioSesion extends javax.swing.JFrame {
         btnRegister = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
         lblCargaUsuarios = new javax.swing.JLabel();
+        btnConnect = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -117,6 +123,13 @@ public class InicioSesion extends javax.swing.JFrame {
             }
         });
 
+        btnConnect.setText("Connect");
+        btnConnect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConnectActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -124,23 +137,29 @@ public class InicioSesion extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtCarnet, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCargaUsuarios, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addContainerGap(91, Short.MAX_VALUE))
+                                .addGap(155, 155, 155)
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                                        .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtCarnet, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblCargaUsuarios, javax.swing.GroupLayout.Alignment.LEADING))))
+                        .addGap(0, 85, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +180,9 @@ public class InicioSesion extends javax.swing.JFrame {
                     .addComponent(btnLogin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblCargaUsuarios)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(btnConnect)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -272,7 +293,11 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
+        
+        if(txtCarnet.getText().isEmpty() || String.valueOf(txtPassword.getPassword()).isEmpty()){
+            JOptionPane.showMessageDialog(null, "Llene todos los campos", "Credenciales Inválidas", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         long carnetLogin = Long.parseLong(txtCarnet.getText());
         Usuario userLogin = userTable.search(carnetLogin);
         usuarioLogeado = null;
@@ -307,11 +332,19 @@ public class InicioSesion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtCarnetKeyTyped
 
+    private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
+        // TODO add your handling code here:
+        Sincronizar conexion = new Sincronizar(false);
+        conexion.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnConnectActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConnect;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnRegister;
     private javax.swing.JLabel jLabel1;
