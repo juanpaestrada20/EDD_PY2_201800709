@@ -47,6 +47,7 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
         txtPuerto = new javax.swing.JTextField();
         btnConnect = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        txtPrueba = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,6 +109,8 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -132,7 +135,8 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConnect)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(txtPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -168,7 +172,7 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
         Thread t1 = new Thread(s);
         t1.start();
         
-        Cliente c = new Cliente(txtIP.getText(), Integer.parseInt(txtPuerto.getText()), "Conectado");
+        Cliente c = new Cliente(txtIP.getText(), Integer.parseInt(txtPuerto.getText()), txtPrueba.getText());
         Thread t = new Thread(c);
         t.start();
     }//GEN-LAST:event_btnConnectActionPerformed
@@ -231,6 +235,7 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField txtIP;
+    private javax.swing.JTextField txtPrueba;
     private javax.swing.JTextField txtPuerto;
     // End of variables declaration//GEN-END:variables
 
