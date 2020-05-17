@@ -102,6 +102,8 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="txtPrueba" min="-2" pref="129" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jButton2" min="-2" pref="77" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnConnect" min="-2" pref="122" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
@@ -133,6 +135,7 @@
                       <Component id="btnConnect" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtPrueba" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="14" max="32767" attributes="0"/>
               </Group>
@@ -171,6 +174,11 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtPrueba">
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="jButton2"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

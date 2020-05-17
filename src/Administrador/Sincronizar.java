@@ -25,7 +25,7 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
         initComponents();
         setLocationRelativeTo(null);
         
-        this.ingresado= ingresado;
+        
     }
 
     /**
@@ -48,6 +48,7 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
         btnConnect = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         txtPrueba = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,6 +101,8 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
             }
         });
 
+        jButton2.setText("jButton2");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -112,6 +115,8 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
                         .addGap(18, 18, 18)
                         .addComponent(txtPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -136,7 +141,8 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConnect)
                     .addComponent(jButton1)
-                    .addComponent(txtPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -167,6 +173,7 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
             JOptionPane.showMessageDialog(null, "Rellene todos los datos");
             return;
         }
+        this.ingresado= ingresado;
         Server s = new Server(Integer.parseInt(txtPuerto.getText()));
         s.addObserver(this);
         Thread t1 = new Thread(s);
@@ -228,6 +235,7 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConnect;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
