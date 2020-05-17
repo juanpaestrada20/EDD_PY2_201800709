@@ -55,6 +55,8 @@ public class Server extends Observable implements  Runnable{
                 this.setChanged();
                 this.notifyObservers(msj);
                 this.clearChanged();
+                socket.close();
+                System.out.println("Cliente Desconectado");
             }
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
