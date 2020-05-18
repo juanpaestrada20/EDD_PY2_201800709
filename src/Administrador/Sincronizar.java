@@ -16,16 +16,22 @@ import javax.swing.JOptionPane;
  *
  * @author juanp
  */
-public class Sincronizar extends javax.swing.JFrame implements Observer{
+public class Sincronizar extends javax.swing.JFrame implements Observer {
+
     private boolean ingresado;
+    public static String host;
+    public static Integer puertoServer;
+    public static Integer puertoClient;
+
     /**
      * Creates new form Sincronizar
      */
     public Sincronizar(boolean ingresado) {
         initComponents();
         setLocationRelativeTo(null);
-        
-        
+        this.ingresado = ingresado;
+        buttonGroup1.add(rbLocal);
+        buttonGroup1.add(rbIP);
     }
 
     /**
@@ -37,6 +43,8 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -46,11 +54,17 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
         jLabel2 = new javax.swing.JLabel();
         txtIP = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtPuerto = new javax.swing.JTextField();
+        txtOwnPort = new javax.swing.JTextField();
         btnConnect = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnSync = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtClientPort = new javax.swing.JTextField();
+        rbLocal = new javax.swing.JRadioButton();
+        rbIP = new javax.swing.JRadioButton();
         txtPrueba = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+
+        jLabel4.setText("jLabel4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,7 +106,7 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         jLabel2.setText("Coloque IP:");
@@ -113,10 +127,22 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
             }
         });
 
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSync.setText("Sincronizar");
+        btnSync.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSyncActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Cliente: ");
+
+        rbLocal.setSelected(true);
+        rbLocal.setText("Localhost");
+
+        rbIP.setText("IP");
+        rbIP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbIPActionPerformed(evt);
             }
         });
 
@@ -126,23 +152,33 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                        .addComponent(btnSync)
                         .addGap(18, 18, 18)
                         .addComponent(btnConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtIP, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(rbLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(rbIP)))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel3))
                         .addGap(18, 18, 18)
-                        .addComponent(txtIP, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtOwnPort, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                            .addComponent(txtClientPort))))
                 .addGap(42, 42, 42))
         );
         jPanel3Layout.setVerticalGroup(
@@ -153,14 +189,20 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
                     .addComponent(jLabel2)
                     .addComponent(txtIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(txtPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtOwnPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtClientPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbLocal)
+                    .addComponent(rbIP))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConnect)
+                    .addComponent(btnSync)
                     .addComponent(jButton1)
-                    .addComponent(txtPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(txtPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,40 +228,63 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
 
     Cliente c;
     private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
-        // TODO add your handling code here:
-        if(txtIP.getText().isEmpty() || txtPuerto.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Rellene todos los datos");
-            return;
+        
+        if (rbLocal.isSelected()) {
+            if (txtOwnPort.getText().isEmpty() || txtClientPort.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Rellene todos los datos");
+                return;
+            }else{
+                this.host = "127.0.0.1";
+                this.puertoServer = Integer.parseInt(txtOwnPort.getText());
+                this.puertoClient = Integer.parseInt(txtClientPort.getText());
+             }
+        } else {
+            if (txtOwnPort.getText().isEmpty() || txtIP.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Rellene todos los datos");
+                return;
+            }else{
+                this.host = txtIP.getText();
+                this.puertoServer = Integer.parseInt(txtOwnPort.getText());
+             }
         }
-        this.ingresado= ingresado;
-        Server s = new Server(Integer.parseInt(txtPuerto.getText()));
+        Server s = new Server(puertoServer);
         s.addObserver(this);
         Thread t1 = new Thread(s);
         t1.start();
-        
-        c = new Cliente(txtIP.getText(), Integer.parseInt(txtPuerto.getText()), txtPrueba.getText());
-        Thread t = new Thread(c);
-        t.start();
-        jTextArea1.append(txtIP.getText() +" -> " + txtPrueba.getText());
     }//GEN-LAST:event_btnConnectActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(!ingresado){
+        if (!ingresado) {
             InicioSesion inicio = new InicioSesion();
             inicio.setVisible(true);
             dispose();
-        }else{
+        } else {
             MenuPrincipal menu = new MenuPrincipal();
             menu.setVisible(true);
             dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSyncActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+        if (this.puertoClient == null) {
+            System.out.println("NO SE ENCUENTRA CONECTADO!");
+            return;
+        }
+        if (this.host == null) {
+            System.out.println("Quien es el cliente");
+            return;
+        }
+        jTextArea1.append(this.puertoServer + " -> " + this.puertoClient + ": " + txtPrueba.getText() + "\n");
+        c = new Cliente(host, puertoClient, txtPrueba.getText());
+        Thread t = new Thread(c);
+        t.start();
+    }//GEN-LAST:event_btnSyncActionPerformed
+
+    private void rbIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbIPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbIPActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,23 +323,29 @@ public class Sincronizar extends javax.swing.JFrame implements Observer{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConnect;
+    private javax.swing.JButton btnSync;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JRadioButton rbIP;
+    private javax.swing.JRadioButton rbLocal;
+    private javax.swing.JTextField txtClientPort;
     private javax.swing.JTextField txtIP;
+    private javax.swing.JTextField txtOwnPort;
     private javax.swing.JTextField txtPrueba;
-    private javax.swing.JTextField txtPuerto;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Observable o, Object arg) {
-        this.jTextArea1.append((String)arg);
+        this.jTextArea1.append(puertoClient +" -> " +puertoServer+": " +(String) arg +"\n");
     }
 }

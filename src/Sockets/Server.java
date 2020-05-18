@@ -36,7 +36,6 @@ public class Server extends Observable implements  Runnable{
         ServerSocket servidor = null;
         Socket socket = null;
         DataInputStream in;
-        DataOutputStream out;
         
         try{
             servidor = new ServerSocket(puerto);
@@ -47,7 +46,7 @@ public class Server extends Observable implements  Runnable{
                 
                 System.out.println("Cliente conectado...");
                 in = new DataInputStream(socket.getInputStream());
-                out = new DataOutputStream(socket.getOutputStream());
+                
                 
                 String msj = in.readUTF();
                 System.out.println(msj);
@@ -55,6 +54,7 @@ public class Server extends Observable implements  Runnable{
                 this.setChanged();
                 this.notifyObservers(msj);
                 this.clearChanged();
+                
                 socket.close();
                 System.out.println("Cliente Desconectado");
             }
