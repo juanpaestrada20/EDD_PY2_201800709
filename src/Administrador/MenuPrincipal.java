@@ -11,10 +11,14 @@ import Inicio.InicioSesion;
 import static Inicio.InicioSesion.usuarioLogeado;
 import static Inicio.InicioSesion.library;
 import static Inicio.InicioSesion.userTable;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +37,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private JFileChooser chooser;
     private File file;
+    private BufferedReader archivo;
 
     /**
      * Creates new form MenuAdmin
@@ -215,7 +220,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
             file = chooser.getSelectedFile();
             if (file.canRead()) {
                 if (file.getName().endsWith("json")) {
-                    readJson(file);
+                    try {
+                        archivo = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+                        readJson(archivo);
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (UnsupportedEncodingException ex) {
+                        Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
                 } else {
                     JOptionPane.showMessageDialog(jPanel1, "Debe abrir Archivo Json", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -251,49 +264,55 @@ public class MenuPrincipal extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCategoriasActionPerformed
 
-    private void readJson(File file) {
+    private void readJson(BufferedReader file) {
         try {
-            Object obj = new JSONParser().parse(new FileReader(file));
-
-            JSONObject jsonObject = (JSONObject) obj;
-            JSONArray books = (JSONArray) jsonObject.get("libros");
-
-            Iterator<JSONObject> iterator = books.iterator();
-
-            while (iterator.hasNext()) {
-                JSONObject book = iterator.next();
-                String lenguage = (String) book.get("Idioma");
-                long isbn = (long) book.get("ISBN");
-                String category = (String) book.get("Categoria");
-                Long edition = (Long) book.get("Edicion");
-                String autor = (String) book.get("Autor");
-                String title = (String) book.get("Titulo");
-                Long year = (Long) book.get("Año");
-                if(year == null){
-                    year = (Long) book.get("AÄ±o");
-                }
-                String edit = (String) book.get("Editorial");
-                Libro newBook = new Libro(isbn, title, autor, edit, year.intValue(), edition.intValue(), category, lenguage, usuarioLogeado.getCarnet());
-                System.out.println(isbn + " - " + title);
-                AVLNode node = library.searchCategory(category);
-                if (node == null) {
-                    library.insertBook(newBook);
-                    usuarioLogeado.agregarLibro(newBook);
-                }else{
-                    if(node.libros.buscarLibroISBN(isbn) == null){
+            StringBuilder sb = new StringBuilder();
+            String input;
+            while((input = file.readLine()) != null){
+                sb.append(input);
+            }
+            
+            try {
+                Object obj = new JSONParser().parse(sb.toString());
+                
+                JSONObject jsonObject = (JSONObject) obj;
+                JSONArray books = (JSONArray) jsonObject.get("libros");
+                
+                Iterator<JSONObject> iterator = books.iterator();
+                
+                while (iterator.hasNext()) {
+                    JSONObject book = iterator.next();
+                    String lenguage = (String) book.get("Idioma");
+                    long isbn = (long) book.get("ISBN");
+                    String category = (String) book.get("Categoria");
+                    Long edition = (Long) book.get("Edicion");
+                    String autor = (String) book.get("Autor");
+                    String title = (String) book.get("Titulo");
+                    Long year = (Long) book.get("Año");
+                    if(year == null){
+                        year = (Long) book.get("AÄ±o");
+                    }
+                    String edit = (String) book.get("Editorial");
+                    Libro newBook = new Libro(isbn, title, autor, edit, year.intValue(), edition.intValue(), category, lenguage, usuarioLogeado.getCarnet());
+                    System.out.println(isbn + " - " + title);
+                    AVLNode node = library.searchCategory(category);
+                    if (node == null) {
                         library.insertBook(newBook);
                         usuarioLogeado.agregarLibro(newBook);
                     }else{
-                        System.out.println("Libro ya existe");
+                        if(node.libros.buscarLibroISBN(isbn) == null){
+                            library.insertBook(newBook);
+                            usuarioLogeado.agregarLibro(newBook);
+                        }else{
+                            System.out.println("Libro ya existe");
+                        }
                     }
                 }
+                userTable.generateTable();
+            } catch (ParseException ex) {
+                Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
-            userTable.generateTable();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
             Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

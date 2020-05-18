@@ -228,24 +228,24 @@ public class Sincronizar extends javax.swing.JFrame implements Observer {
 
     Cliente c;
     private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
-        
+
         if (rbLocal.isSelected()) {
             if (txtOwnPort.getText().isEmpty() || txtClientPort.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Rellene todos los datos");
                 return;
-            }else{
+            } else {
                 this.host = "127.0.0.1";
                 this.puertoServer = Integer.parseInt(txtOwnPort.getText());
                 this.puertoClient = Integer.parseInt(txtClientPort.getText());
-             }
+            }
         } else {
             if (txtOwnPort.getText().isEmpty() || txtIP.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Rellene todos los datos");
                 return;
-            }else{
+            } else {
                 this.host = txtIP.getText();
                 this.puertoServer = Integer.parseInt(txtOwnPort.getText());
-             }
+            }
         }
         Server s = new Server(puertoServer);
         s.addObserver(this);
@@ -268,18 +268,27 @@ public class Sincronizar extends javax.swing.JFrame implements Observer {
 
     private void btnSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSyncActionPerformed
         // TODO add your handling code here:
-        if (this.puertoClient == null) {
-            System.out.println("NO SE ENCUENTRA CONECTADO!");
-            return;
-        }
-        if (this.host == null) {
-            System.out.println("Quien es el cliente");
-            return;
+        if (rbLocal.isSelected()) {
+            if (puertoClient == null || puertoServer == null) {
+                System.out.println("NO SE ENCUENTRA CONECTADO!");
+                return;
+            } else {
+                c = new Cliente(host, puertoClient, txtPrueba.getText());
+                Thread t = new Thread(c);
+                t.start();
+            }
+        }else{
+            if(puertoServer == null || host == null){
+                System.out.println("NO SE ENCUENTRA CONECTADO!");
+                return;
+            }else{
+                c = new Cliente(host, puertoServer, txtPrueba.getText());
+                Thread t = new Thread(c);
+                t.start();
+            }
         }
         jTextArea1.append(this.puertoServer + " -> " + this.puertoClient + ": " + txtPrueba.getText() + "\n");
-        c = new Cliente(host, puertoClient, txtPrueba.getText());
-        Thread t = new Thread(c);
-        t.start();
+
     }//GEN-LAST:event_btnSyncActionPerformed
 
     private void rbIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbIPActionPerformed
@@ -346,6 +355,6 @@ public class Sincronizar extends javax.swing.JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        this.jTextArea1.append(puertoClient +" -> " +puertoServer+": " +(String) arg +"\n");
+        this.jTextArea1.append(puertoClient + " -> " + puertoServer + ": " + (String) arg + "\n");
     }
 }
