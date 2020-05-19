@@ -558,6 +558,8 @@ public class Biblioteca extends javax.swing.JFrame {
             usuarioLogeado.getLibros().getBooks(categoria, String.valueOf(usuarioLogeado.getCarnet()));
             String rutaImagen = "BTree_Libros_" + categoria + "_" + String.valueOf(usuarioLogeado.getCarnet()) + ".png";
             image = new ImageIcon(rutaImagen);
+            ArrayList<Libro> libros = usuarioLogeado.getLibros().getBooksFromCategory(categoria);
+            agregarLibros(libros);
             lblImagen.setIcon(image);
             jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);

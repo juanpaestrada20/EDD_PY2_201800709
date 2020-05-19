@@ -5,11 +5,13 @@
  */
 package DataStructures;
 
+import java.io.Serializable;
+
 /**
  *
  * @author juanp
  */
-public class AVLNode {
+public class AVLNode implements Serializable{
 
     public String categoria;
     public AVLNode left;

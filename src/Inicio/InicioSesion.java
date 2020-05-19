@@ -37,7 +37,7 @@ import org.json.simple.parser.ParseException;
  */
 public class InicioSesion extends javax.swing.JFrame {
 
-    public static String data = new String();
+    public static String dataE = new String();
     public static HashTable userTable = new HashTable();
     public static AVLTree library = new AVLTree();
     public static Usuario usuarioLogeado;
@@ -58,7 +58,6 @@ public class InicioSesion extends javax.swing.JFrame {
     public InicioSesion() {
         initComponents();
         setLocationRelativeTo(null);
-        data = "HOlas";
     }
 
     /**

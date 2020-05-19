@@ -6,12 +6,13 @@
 package DataStructures;
 
 import Clases.Bloque;
+import java.io.Serializable;
 
 /**
  *
  * @author juanp
  */
-public class BlockNode {
+public class BlockNode implements Serializable{
     public Bloque bloque;
     public BlockNode next;
     public BlockNode prev;

@@ -6,12 +6,13 @@
 package DataStructures;
 
 import Clases.Usuario;
+import java.io.Serializable;
 
 /**
  *
  * @author juanp
  */
-public class List {
+public class List implements Serializable{
 
     public ListNode first;
     public ListNode last;

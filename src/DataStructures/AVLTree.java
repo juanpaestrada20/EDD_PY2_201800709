@@ -14,11 +14,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static Inicio.InicioSesion.CategoriasAgregadas;
+import java.io.Serializable;
 /**
  *
  * @author juanp
  */
-public class AVLTree {
+public class AVLTree implements Serializable{
 
     public AVLNode root;
 

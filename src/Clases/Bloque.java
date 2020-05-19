@@ -9,6 +9,7 @@ import DataStructures.AVLTree;
 import DataStructures.HashTable;
 import DataStructures.RedList;
 import java.io.File;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author juanp
  */
-public class Bloque {
+public class Bloque implements Serializable{
 
     public int index;
     public String timeStamp;

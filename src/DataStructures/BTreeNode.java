@@ -6,12 +6,13 @@
 package DataStructures;
 
 import Clases.Libro;
+import java.io.Serializable;
 
 /**
  *
  * @author juanp
  */
-public class BTreeNode {
+public class BTreeNode implements Serializable{
 
     public int n;           // numero de llaves almacenadas
     public Libro[] keys;     //llaves

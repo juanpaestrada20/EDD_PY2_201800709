@@ -1,25 +1,5 @@
 digraph g{
 rankdir=LR;
 node [margin=0 shape=box fillcolor=lightsalmon fontcolor=white style=filled];
-0[label="Genesis:\nIndex: 0\nTimestamp: 15:25:52 16/05/2020\nNonce: 47644\nPreviousHash: \nHash: 0000"];
-1[label="Genesis:\nIndex: 1\nTimestamp: 15:26:01 16/05/2020\nNonce: 38183\nPreviousHash: 0000\nHash: 0000e93c764f16850f973454c1eb636b3d1f1666ac04c3106df2570a26a65107"];
-2[label="Genesis:\nIndex: 2\nTimestamp: 15:26:06 16/05/2020\nNonce: 92478\nPreviousHash: 0000e93c764f16850f973454c1eb636b3d1f1666ac04c3106df2570a26a65107\nHash: 0000b2b1e904c088ef139aed32c3fe54cd3fd6c2c6e7c3c3b8544c254804952e"];
-3[label="Genesis:\nIndex: 3\nTimestamp: 15:26:19 16/05/2020\nNonce: 19053\nPreviousHash: 0000b2b1e904c088ef139aed32c3fe54cd3fd6c2c6e7c3c3b8544c254804952e\nHash: 0000427eb1b3eba33981db6533b821c97cfdfc4825b101bc8a3e1e72e591aded"];
-4[label="Genesis:\nIndex: 4\nTimestamp: 15:26:22 16/05/2020\nNonce: 45979\nPreviousHash: 0000427eb1b3eba33981db6533b821c97cfdfc4825b101bc8a3e1e72e591aded\nHash: 0000adb267ff9919eabfeb15f5573e5a80ce33d525e8cd6a4eaa715e5c2bb8fe"];
-5[label="Genesis:\nIndex: 5\nTimestamp: 15:26:30 16/05/2020\nNonce: 53390\nPreviousHash: 0000adb267ff9919eabfeb15f5573e5a80ce33d525e8cd6a4eaa715e5c2bb8fe\nHash: 00005bae958668ca39ba45be282d1e67f5240b116494b7923b8d8136c6f4570a"];
-6[label="Genesis:\nIndex: 6\nTimestamp: 15:26:37 16/05/2020\nNonce: 188254\nPreviousHash: 00005bae958668ca39ba45be282d1e67f5240b116494b7923b8d8136c6f4570a\nHash: 0000d7b74f96ce166c6198b2a217c372927da351ba5022e89768cecbaa35a7e7"];
-7[label="Genesis:\nIndex: 7\nTimestamp: 15:26:57 16/05/2020\nNonce: 156964\nPreviousHash: 0000d7b74f96ce166c6198b2a217c372927da351ba5022e89768cecbaa35a7e7\nHash: 0000b5ecbea6c9c0cc846af88ea91ab0c6162b3de5e54bbad9ae06f8ee434adf"];
-8[label="Genesis:\nIndex: 8\nTimestamp: 15:27:12 16/05/2020\nNonce: 56413\nPreviousHash: 0000b5ecbea6c9c0cc846af88ea91ab0c6162b3de5e54bbad9ae06f8ee434adf\nHash: 0000185d9a074a556c9aeff25964d57f17dc6effd40aa863affdcb338cc3e347"];
-9[label="Genesis:\nIndex: 9\nTimestamp: 15:27:18 16/05/2020\nNonce: 6749\nPreviousHash: 0000185d9a074a556c9aeff25964d57f17dc6effd40aa863affdcb338cc3e347\nHash: 000098a75d166b3a7fc56cb1f5df9f05a1e14dedbb14c8cb79f0b8648f77cadf"];
-10[label="Genesis:\nIndex: 10\nTimestamp: 15:27:18 16/05/2020\nNonce: 19240\nPreviousHash: 000098a75d166b3a7fc56cb1f5df9f05a1e14dedbb14c8cb79f0b8648f77cadf\nHash: 0000a7db145e74780aa144e193f6a6c93504d883c08ec978c1dfdb2b5e600a3f"];
-0->1[dir=both];
-1->2[dir=both];
-2->3[dir=both];
-3->4[dir=both];
-4->5[dir=both];
-5->6[dir=both];
-6->7[dir=both];
-7->8[dir=both];
-8->9[dir=both];
-9->10[dir=both];
+0[label="Genesis:\nIndex: 0\nTimestamp: 21:52:31 18/05/2020\nNonce: 48362\nPreviousHash: \nHash: 0000"];
 }

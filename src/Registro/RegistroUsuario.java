@@ -6,7 +6,6 @@
 package Registro;
 
 import Clases.Usuario;
-import static Inicio.InicioSesion.data;
 import static Inicio.InicioSesion.userTable;
 import static Inicio.InicioSesion.UsuariosAgregados;
 import javax.swing.JOptionPane;
@@ -232,7 +231,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
         } else {
             String pas = String.valueOf(txtPassword.getPassword());
             String pas2 = String.valueOf(txtPassword1.getPassword());
-            if (pas.compareTo(pas2) == 0) {
+            if (pas.equals(pas2)) {
                 long carnet = Long.parseLong(txtCarnet.getText());
                 Usuario nuevo = new Usuario(carnet, txtNombre.getText(), txtApellido.getText(), txtCarrera.getText(), pas);
                 UsuariosAgregados.add(nuevo);

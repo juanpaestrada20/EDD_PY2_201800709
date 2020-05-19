@@ -5,11 +5,13 @@
  */
 package DataStructures;
 
+import java.io.Serializable;
+
 /**
  *
  * @author juanp
  */
-public class Nodos {
+public class Nodos implements Serializable{
     public String ip;
     public Nodos next;
 

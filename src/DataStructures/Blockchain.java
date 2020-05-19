@@ -6,7 +6,7 @@
 package DataStructures;
 
 import Clases.Bloque;
-import static Inicio.InicioSesion.data;
+import static Inicio.InicioSesion.dataE;
 import static Inicio.InicioSesion.library;
 import static Inicio.InicioSesion.userTable;
 import static Inicio.InicioSesion.listaUsuarios;
@@ -51,12 +51,12 @@ public class Blockchain  implements Serializable{
     
     public void newBlock(){
         if(size == 0){
-            Bloque gene = new Bloque(size, data, null, library, userTable, listaUsuarios);
+            Bloque gene = new Bloque(size, dataE, null, library, userTable, listaUsuarios);
             gene.hash = "0000";
             genesis = new BlockNode(gene);
             last = genesis;
         }else{
-            Bloque bloque = new Bloque(size, data, last.bloque.hash, library, userTable, listaUsuarios);
+            Bloque bloque = new Bloque(size, dataE, last.bloque.hash, library, userTable, listaUsuarios);
             BlockNode nuevo = new BlockNode(bloque);
             last.next = nuevo;
             nuevo.prev = last;

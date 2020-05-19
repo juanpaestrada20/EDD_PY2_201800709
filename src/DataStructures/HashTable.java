@@ -10,6 +10,7 @@ import static Inicio.InicioSesion.library;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author juanp
  */
-public class HashTable {
+public class HashTable implements Serializable{
 
     private final int size = 45;
     private List[] usersList;

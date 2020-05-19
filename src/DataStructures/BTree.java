@@ -9,6 +9,7 @@ import Clases.Libro;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author juanp
  */
-public class BTree {
+public class BTree implements Serializable {
 
     public BTreeNode root;
     public int t;

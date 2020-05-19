@@ -6,6 +6,7 @@
 package Clases;
 
 import DataStructures.AVLTree;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author juanpa
  */
-public class Usuario {
+public class Usuario implements Serializable {
 
     private long carnet;
     private String nombre;

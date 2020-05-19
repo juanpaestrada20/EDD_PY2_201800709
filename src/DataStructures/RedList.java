@@ -8,6 +8,7 @@ package DataStructures;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author juanp
  */
-public class RedList {
+public class RedList implements Serializable {
 
     public Nodos first;
     private int size;

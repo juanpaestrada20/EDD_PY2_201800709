@@ -5,12 +5,18 @@
  */
 package Administrador;
 
+import Clases.Libro;
+import Clases.Usuario;
+import DataStructures.Blockchain;
 import Inicio.InicioSesion;
+import static Inicio.InicioSesion.*;
 import Sockets.Cliente;
 import Sockets.Server;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JOptionPane;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -22,6 +28,7 @@ public class Sincronizar extends javax.swing.JFrame implements Observer {
     public static String host;
     public static Integer puertoServer;
     public static Integer puertoClient;
+    Server s;
 
     /**
      * Creates new form Sincronizar
@@ -62,7 +69,6 @@ public class Sincronizar extends javax.swing.JFrame implements Observer {
         txtClientPort = new javax.swing.JTextField();
         rbLocal = new javax.swing.JRadioButton();
         rbIP = new javax.swing.JRadioButton();
-        txtPrueba = new javax.swing.JTextField();
 
         jLabel4.setText("jLabel4");
 
@@ -155,9 +161,7 @@ public class Sincronizar extends javax.swing.JFrame implements Observer {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSync)
                         .addGap(18, 18, 18)
                         .addComponent(btnConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -200,8 +204,7 @@ public class Sincronizar extends javax.swing.JFrame implements Observer {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConnect)
                     .addComponent(btnSync)
-                    .addComponent(jButton1)
-                    .addComponent(txtPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -237,6 +240,10 @@ public class Sincronizar extends javax.swing.JFrame implements Observer {
                 this.host = "127.0.0.1";
                 this.puertoServer = Integer.parseInt(txtOwnPort.getText());
                 this.puertoClient = Integer.parseInt(txtClientPort.getText());
+                dataE = WriteJsonData();
+                blockchain.RegisterNode(host + ":" + puertoServer);
+                blockchain.RegisterNode(host + ":" + puertoClient);
+                
             }
         } else {
             if (txtOwnPort.getText().isEmpty() || txtIP.getText().isEmpty()) {
@@ -245,9 +252,10 @@ public class Sincronizar extends javax.swing.JFrame implements Observer {
             } else {
                 this.host = txtIP.getText();
                 this.puertoServer = Integer.parseInt(txtOwnPort.getText());
+                blockchain.RegisterNode(host + ":" + puertoServer);
             }
         }
-        Server s = new Server(puertoServer);
+        s = new Server(puertoServer);
         s.addObserver(this);
         Thread t1 = new Thread(s);
         t1.start();
@@ -273,23 +281,163 @@ public class Sincronizar extends javax.swing.JFrame implements Observer {
                 System.out.println("NO SE ENCUENTRA CONECTADO!");
                 return;
             } else {
-                c = new Cliente(host, puertoClient, txtPrueba.getText());
+                dataE = WriteJsonData();
+                c = new Cliente(host, puertoClient, blockchain);
                 Thread t = new Thread(c);
                 t.start();
+                
+                //s.sendInfo(blockchain);
             }
-        }else{
-            if(puertoServer == null || host == null){
+        } else {
+            if (puertoServer == null || host == null) {
                 System.out.println("NO SE ENCUENTRA CONECTADO!");
                 return;
-            }else{
-                c = new Cliente(host, puertoServer, txtPrueba.getText());
+            } else {
+                dataE = WriteJsonData();
+                c = new Cliente(host, puertoServer, blockchain);
                 Thread t = new Thread(c);
                 t.start();
             }
         }
-        jTextArea1.append(this.puertoServer + " -> " + this.puertoClient + ": " + txtPrueba.getText() + "\n");
 
     }//GEN-LAST:event_btnSyncActionPerformed
+
+    private String WriteJsonData() {
+        JSONObject obj = new JSONObject();
+        JSONArray data = new JSONArray();
+        JSONArray newUsers = new JSONArray();
+        JSONObject usuariosCreados = new JSONObject();
+        JSONArray deleteUsers = new JSONArray();
+        JSONObject usuariosEliminados = new JSONObject();
+        JSONArray modifyUsers = new JSONArray();
+        JSONObject usuariosModificados = new JSONObject();
+        JSONArray newBooks = new JSONArray();
+        JSONObject librosNuevos = new JSONObject();
+        JSONArray deleteBooks = new JSONArray();
+        JSONObject librosEliminados = new JSONObject();
+        JSONArray modifyBooks = new JSONArray();
+        JSONObject librosModificados = new JSONObject();
+        JSONArray newCategory = new JSONArray();
+        JSONObject categoriaNueva = new JSONObject();
+        JSONArray deleteCategory = new JSONArray();
+        JSONObject catgoriaEliminada = new JSONObject();
+
+        for (Usuario nuevos : UsuariosAgregados) {
+            JSONObject nuevoUsuario = new JSONObject();
+            nuevoUsuario.put("Carnet", nuevos.getCarnet());
+            nuevoUsuario.put("Nombre", nuevos.getNombre());
+            nuevoUsuario.put("Apellido", nuevos.getApellido());
+            nuevoUsuario.put("Carrera", nuevos.getCarrera());
+            nuevoUsuario.put("Password", nuevos.getContrasena());
+            nuevoUsuario.put("Encriptado", nuevos.getMD5());
+            newUsers.add(nuevoUsuario);
+        }
+        usuariosCreados.put("CREAR_USUARIO", newUsers);
+
+        for (Usuario viejos : UsuariosEliminados) {
+            JSONObject viejoUsuario = new JSONObject();
+            viejoUsuario.put("Carnet", viejos.getCarnet());
+            viejoUsuario.put("Nombre", viejos.getNombre());
+            viejoUsuario.put("Apellido", viejos.getApellido());
+            viejoUsuario.put("Carrera", viejos.getCarrera());
+            viejoUsuario.put("Password", viejos.getContrasena());
+            viejoUsuario.put("Encriptado", viejos.getMD5());
+            deleteUsers.add(viejoUsuario);
+        }
+        usuariosEliminados.put("ELIMINAR_USUARIO", deleteUsers);
+
+        for (Usuario modificados : UsuariosModficados) {
+            JSONObject modificadoUsuario = new JSONObject();
+            modificadoUsuario.put("Carnet", modificados.getCarnet());
+            modificadoUsuario.put("Nombre", modificados.getNombre());
+            modificadoUsuario.put("Apellido", modificados.getApellido());
+            modificadoUsuario.put("Carrera", modificados.getCarrera());
+            modificadoUsuario.put("Password", modificados.getContrasena());
+            modificadoUsuario.put("Encriptado", modificados.getMD5());
+            modifyUsers.add(modificadoUsuario);
+        }
+        usuariosModificados.put("EDITAR_USUARIO", modifyUsers);
+
+        for (Libro nuevos : LibrosAgregados) {
+            JSONObject nuevoLibro = new JSONObject();
+            nuevoLibro.put("ISBN", nuevos.getISBN());
+            nuevoLibro.put("Año", nuevos.getAnio());
+            nuevoLibro.put("Idioma", nuevos.getIdioma());
+            nuevoLibro.put("Titulo", nuevos.getTitulo());
+            nuevoLibro.put("Editorial", nuevos.getEditorial());
+            nuevoLibro.put("Autor", nuevos.getAutor());
+            nuevoLibro.put("Edicion", nuevos.getEdicion());
+            nuevoLibro.put("Categoria", nuevos.getCategoria());
+            nuevoLibro.put("Carnet", nuevos.getCarnet());
+            newBooks.add(nuevoLibro);
+        }
+        librosNuevos.put("CREAR_LIBRO", newBooks);
+
+        for (Libro viejos : LibrosAgregados) {
+            JSONObject viejoLibro = new JSONObject();
+            viejoLibro.put("ISBN", viejos.getISBN());
+            viejoLibro.put("Año", viejos.getAnio());
+            viejoLibro.put("Idioma", viejos.getIdioma());
+            viejoLibro.put("Titulo", viejos.getTitulo());
+            viejoLibro.put("Editorial", viejos.getEditorial());
+            viejoLibro.put("Autor", viejos.getAutor());
+            viejoLibro.put("Edicion", viejos.getEdicion());
+            viejoLibro.put("Categoria", viejos.getCategoria());
+            viejoLibro.put("Carnet", viejos.getCarnet());
+            deleteBooks.add(viejoLibro);
+        }
+        librosEliminados.put("ELIMINAR_LIBRO", deleteBooks);
+
+        for (Libro modificados : LibrosAgregados) {
+            JSONObject modificadoLibro = new JSONObject();
+            modificadoLibro.put("ISBN", modificados.getISBN());
+            modificadoLibro.put("Año", modificados.getAnio());
+            modificadoLibro.put("Idioma", modificados.getIdioma());
+            modificadoLibro.put("Titulo", modificados.getTitulo());
+            modificadoLibro.put("Editorial", modificados.getEditorial());
+            modificadoLibro.put("Autor", modificados.getAutor());
+            modificadoLibro.put("Edicion", modificados.getEdicion());
+            modificadoLibro.put("Categoria", modificados.getCategoria());
+            modificadoLibro.put("Carnet", modificados.getCarnet());
+            modifyBooks.add(modificadoLibro);
+        }
+        librosModificados.put("EDITAR_LIBRO", modifyBooks);
+
+        for (String nuevos : CategoriasAgregadas) {
+            JSONObject nuevoCategoria = new JSONObject();
+            nuevoCategoria.put("Categoria", nuevos);
+            newCategory.add(nuevoCategoria);
+        }
+        categoriaNueva.put("CREAR_CATEGORIA", newCategory);
+
+        for (String viejos : CategoriasAgregadas) {
+            JSONObject viejoCategoria = new JSONObject();
+            viejoCategoria.put("Categoria", viejos);
+            deleteCategory.add(viejoCategoria);
+        }
+        catgoriaEliminada.put("ELIMINAR_CATEGORIA", deleteCategory);
+        
+        data.add(usuariosCreados);
+        data.add(usuariosEliminados);
+        data.add(usuariosModificados);
+        data.add(librosNuevos);
+        data.add(librosEliminados);
+        data.add(librosModificados);
+        data.add(categoriaNueva);
+        data.add(catgoriaEliminada);
+        
+        obj.put("DATA", data);
+        
+        UsuariosAgregados.clear();
+        UsuariosModficados.clear();
+        UsuariosEliminados.clear();
+        LibrosAgregados.clear();
+        LibrosModificados.clear();
+        LibrosEliminados.clear();
+        CategoriasAgregadas.clear();
+        CategoriasEliminadas.clear();
+        return obj.toString();
+    }
 
     private void rbIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbIPActionPerformed
         // TODO add your handling code here:
@@ -350,11 +498,15 @@ public class Sincronizar extends javax.swing.JFrame implements Observer {
     private javax.swing.JTextField txtClientPort;
     private javax.swing.JTextField txtIP;
     private javax.swing.JTextField txtOwnPort;
-    private javax.swing.JTextField txtPrueba;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Observable o, Object arg) {
-        this.jTextArea1.append(puertoClient + " -> " + puertoServer + ": " + (String) arg + "\n");
+        Blockchain blok = (Blockchain) arg;
+        this.jTextArea1.append(blok.last.bloque.data);
+        userTable = blok.last.bloque.usuarios;
+        library = blok.last.bloque.libreria;
+        listaUsuarios = blok.last.bloque.listaNodos;
+        blockchain = blok;
     }
 }
