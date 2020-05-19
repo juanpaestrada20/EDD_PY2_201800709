@@ -8,8 +8,7 @@ Ensayo->Drama
 Ensayo->Epico
 Informativos->Lírico
 Lírico->Literatura
-Lírico->Sagas
-Sagas->Revista
-Sagas->x
+Lírico->Revista
+Revista->Sagas
 
 }
