@@ -1,0 +1,15 @@
+digraph G {
+node [shape = record,height=.1 color=black fillcolor=salmon style=filled];
+labelloc="t";
+label="Libros de Lírico";
+node1[label = "<f0> |Thomas Jefferson; biografía\n10802\nLírico\n201800709|<f1> |Enseñar a pensar\n10806\nLírico\n201800709|<f2> |Guía de aspectos presupuestarios y fiscales\n10862\nLírico\n201800709|<f3>"];
+node2[label = "<f0> |Titanes de la canción guatemalteca\n10799\nLírico\n201800709|<f1> |Sociología de la educación\n10801\nLírico\n201800709|<f2>"];
+"node1":f0->"node2";
+node3[label = "<f0> |Hombres de América (Montalvo - Bolívar - Rubén Darío). Discursos parlamentarios\n10803\nLírico\n201800709|<f1> |Historia de las grandes religiones, v. 5\n10804\nLírico\n201800709|<f2>"];
+"node1":f1->"node3";
+node4[label = "<f0> |Jóvenes buscando un amor\n10859\nLírico\n201800709|<f1> |El túnel del amor\n10860\nLírico\n201800709|<f2>"];
+"node1":f2->"node4";
+node5[label = "<f0> |Centesimus annus / Karol Wojtyla\n10871\nLírico\n201800709|<f1> |Successful houses and how to build them\n10872\nLírico\n201800709|<f2> |Viaje a América Central (Yucatán y Guatemala)\n10873\nLírico\n201800709|<f3> |Introducción al código procesal penal\n13549\nLírico\n201800709|<f4>"];
+"node1":f3->"node5";
+
+}

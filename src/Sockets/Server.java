@@ -28,6 +28,7 @@ public class Server extends Observable implements Runnable {
 
     public Server(int puerto) {
         this.puerto = puerto;
+        clientes = new ArrayList<>();
     }
 
     @Override
@@ -42,6 +43,7 @@ public class Server extends Observable implements Runnable {
             System.out.println("Servidor Iniciado...");
             while(true){
                 socket = servidor.accept();
+                clientes.add(socket);
                 System.out.println("Cliente conectado...");
                 in = new ObjectInputStream(socket.getInputStream());
                 Object msj = in.readObject();

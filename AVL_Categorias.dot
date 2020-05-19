@@ -3,13 +3,13 @@ rankdir=TB;
 node [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];
 Informativos->Consulta
 Consulta->Biografia
-Biografia->amistad
 Consulta->Ensayo
 Ensayo->Drama
 Ensayo->Epico
 Informativos->Lírico
 Lírico->Literatura
-Lírico->Revista
-Revista->Sagas
+Lírico->Sagas
+Sagas->Revista
+Sagas->x
 
 }

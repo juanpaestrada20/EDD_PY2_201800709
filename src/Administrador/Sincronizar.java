@@ -286,19 +286,20 @@ public class Sincronizar extends javax.swing.JFrame implements Observer {
                 Thread t = new Thread(c);
                 t.start();
                 
-                //s.sendInfo(blockchain);
             }
         } else {
             if (puertoServer == null || host == null) {
                 System.out.println("NO SE ENCUENTRA CONECTADO!");
                 return;
             } else {
+                
                 dataE = WriteJsonData();
                 c = new Cliente(host, puertoServer, blockchain);
                 Thread t = new Thread(c);
                 t.start();
             }
         }
+        s.sendInfo(blockchain);
 
     }//GEN-LAST:event_btnSyncActionPerformed
 

@@ -2,4 +2,10 @@ digraph g{
 rankdir=LR;
 node [margin=0 shape=box fillcolor=lightsalmon fontcolor=white style=filled];
 0[label="127.0.0.1:5000"];
+1[label="127.0.0.1:6000"];
+2[label="127.0.0.1:7000"];
+3[label="127.0.0.1:7000"];
+0->1;
+1->2;
+2->3;
 }
