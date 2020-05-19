@@ -1,0 +1,5 @@
+digraph g{
+rankdir=LR;
+node [margin=0 shape=box fillcolor=lightsalmon fontcolor=white style=filled];
+0[label="192.168.1.11:5000"];
+}

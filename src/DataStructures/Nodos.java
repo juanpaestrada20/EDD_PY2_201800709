@@ -3,19 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Inicio;
+package DataStructures;
+
+import java.io.Serializable;
 
 /**
  *
  * @author juanp
  */
-public class main {
+public class Nodos implements Serializable{
+    public String ip;
+    public Nodos next;
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public Nodos(String ip) {
+        this.ip = ip;
+        this.next = null;
     }
+    
     
 }

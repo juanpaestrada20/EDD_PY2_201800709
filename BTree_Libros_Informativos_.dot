@@ -1,0 +1,37 @@
+digraph G {
+node [shape = record,height=.1 color=black fillcolor=salmon style=filled];
+labelloc="t";
+label="Libros de Informativos";
+node1[label = "<f0> |Introducción a la ética\n10842\nInformativos\n201800709|<f1>"];
+node2[label = "<f0> |Producción higiénica de la leche cruda; una guía para la pequeña y mediana empresa\n10775\nInformativos\n201800709|<f1>"];
+node3[label = "<f0> |Procesamiento de carnes y embutidos; elaboración, estandarización, control de calidad\n10773\nInformativos\n201800709|<f1>"];
+node4[label = "<f0> |Las Ventas en el mundo actual\n10772\nInformativos\n201800709|<f1>"];
+"node3":f0->"node4";
+node5[label = "<f0> |Optimización de rendimiento y aseguramiento de inocuidad en la industria de quesería; una guía para la pequeña y mediana empresa\n10774\nInformativos\n201800709|<f1>"];
+"node3":f1->"node5";
+"node2":f0->"node3";
+node6[label = "<f0> |La idea del hombre\n10786\nInformativos\n201800709|<f1>"];
+node7[label = "<f0> |Moral para intelectuales\n10783\nInformativos\n201800709|<f1>"];
+"node6":f0->"node7";
+node8[label = "<f0> |Constitución pastoral Gaudium et spes, sobre la Iglesia en el mundo actual\n10840\nInformativos\n201800709|<f1>"];
+"node6":f1->"node8";
+"node2":f1->"node6";
+"node1":f0->"node2";
+node9[label = "<f0> |Historia de la provincia de San Vicente de Chiapa y Guatemala de la orden de Predicadores\n10848\nInformativos\n201800709|<f1>"];
+node10[label = "<f0> |Educación política nacional\n10846\nInformativos\n201800709|<f1>"];
+node11[label = "<f0> |El ocaso de un régimen\n10844\nInformativos\n201800709|<f1>"];
+"node10":f0->"node11";
+node12[label = "<f0> |De hombres sociales y movimientos políticos / C. Wright Mills.\n10847\nInformativos\n201800709|<f1>"];
+"node10":f1->"node12";
+"node9":f0->"node10";
+node13[label = "<f0> |Cómo resolver el problema de falta de tiempo\n10928\nInformativos\n201800709|<f1> |Pan Am: an airline and its aircraft\n10932\nInformativos\n201800709|<f2>"];
+node14[label = "<f0> |Evaluación de impacto en formación empresarial ; el caso FUNDES\n10927\nInformativos\n201800709|<f1>"];
+"node13":f0->"node14";
+node15[label = "<f0> |Psicología aplicada a la enseñanza\n10930\nInformativos\n201800709|<f1>"];
+"node13":f1->"node15";
+node16[label = "<f0> |La Mujer de pelo largo / Leonor Paz y Paz G.\n10933\nInformativos\n201800709|<f1> |El libro de la piedad y de la muerte\n10934\nInformativos\n201800709|<f2>"];
+"node13":f2->"node16";
+"node9":f1->"node13";
+"node1":f1->"node9";
+
+}

@@ -5,10 +5,19 @@
  */
 package DataStructures;
 
+import Clases.Usuario;
+import java.io.Serializable;
+
 /**
  *
  * @author juanp
  */
-public class LinkedList {
+public class ListNode implements Serializable {
+    public Usuario user;
+    public ListNode next;
     
+    public ListNode(Usuario user){
+        this.user = user;
+        next = null;
+    }
 }

@@ -1,0 +1,15 @@
+digraph G {
+node [shape = record,height=.1 color=black fillcolor=salmon style=filled];
+labelloc="t";
+label="Libros de Ensayo";
+node1[label = "<f0> |Viajar es vivir (parábola imperfecta) / Juan José Arévalo Bermejo.\n10795\nEnsayo\n201800709|<f1> |Historia de la provincia de San Vicente de Chiapa y Guatemala de la orden de Predicadores\n10854\nEnsayo\n201800709|<f2> |Communicating through letters and reports\n10857\nEnsayo\n201800709|<f3>"];
+node2[label = "<f0> |El misterio de María\n10793\nEnsayo\n201800709|<f1> |Mil quinientas [1,500]... máximas y sentencias de los más destacados filósofos de todos los tiempos\n10794\nEnsayo\n201800709|<f2>"];
+"node1":f0->"node2";
+node3[label = "<f0> |El misterio de la vida\n10797\nEnsayo\n201800709|<f1> |María Chapdelaine\n10798\nEnsayo\n201800709|<f2>"];
+"node1":f1->"node3";
+node4[label = "<f0> |Descripción geográfico-moral de la diócesis de Goathemala, v 1\n10855\nEnsayo\n201800709|<f1> |Descripción geográfico-moral de la diócesis de Goathemala, v 2\n10856\nEnsayo\n201800709|<f2>"];
+"node1":f2->"node4";
+node5[label = "<f0> |Aprender a dibujar : un método garantizado\n10858\nEnsayo\n201800709|<f1> |Desarrollo organizacional : estrategias de interrelación humana para el desarrollo de organizaciones v 2 : Desarrollo organizacional: estrategias y modelos\n10939\nEnsayo\n201800709|<f2> |Desarrollo organizacional : estrategias de interrelación humana para el desarrollo de organizaciones v 3 El modelo de cuadro organizacional GRID\n10940\nEnsayo\n201800709|<f3>"];
+"node1":f3->"node5";
+
+}

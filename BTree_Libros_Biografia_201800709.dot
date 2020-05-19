@@ -1,0 +1,11 @@
+digraph G {
+node [shape = record,height=.1 color=black fillcolor=salmon style=filled];
+labelloc="t";
+label="Libros de Biografia";
+node1[label = "<f0> |Historia de la provincia de San Vicente de Chiapa y Guatemala de la orden de Predicadores\n10850\nBiografia\n201800709|<f1>"];
+node2[label = "<f0> |5\n1\nBiografia\n201800709|<f1> |La nueva imagen del hombre común\n10787\nBiografia\n201800709|<f2>"];
+"node1":f0->"node2";
+node3[label = "<f0> |Política. Figuras. Paisajes\n10935\nBiografia\n201800709|<f1>"];
+"node1":f1->"node3";
+
+}

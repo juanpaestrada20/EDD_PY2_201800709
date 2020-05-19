@@ -1,0 +1,5 @@
+digraph G{
+rankdir=LR;
+node [margin=0 shape=box width=1.2 color=crimson fontcolor=white style=filled ];
+Informativos->Consulta->Biografia->Ensayo->Drama->Epico->Lírico->Literatura->Revista->Sagas
+}
