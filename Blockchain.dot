@@ -1,11 +1,5 @@
 digraph g{
 rankdir=LR;
 node [margin=0 shape=box fillcolor=lightsalmon fontcolor=white style=filled];
-0[label="Genesis:\nIndex: 0\nTimestamp: 22:56:21 18/05/2020\nNonce: 64793\nPreviousHash: \nHash: 0000"];
-1[label="Genesis:\nIndex: 1\nTimestamp: 22:56:26 18/05/2020\nNonce: 41063\nPreviousHash: 0000\nHash: 0000e56a952dcaaf901a586868e4de910af7cb6b5d036d610423283cb4766305"];
-2[label="Genesis:\nIndex: 2\nTimestamp: 22:57:07 18/05/2020\nNonce: 21946\nPreviousHash: 0000e56a952dcaaf901a586868e4de910af7cb6b5d036d610423283cb4766305\nHash: 0000ca6a54d0994ccca5f9ae07f10091c26413d237a12028e25152249795e610"];
-3[label="Genesis:\nIndex: 3\nTimestamp: 22:57:19 18/05/2020\nNonce: 15910\nPreviousHash: 0000ca6a54d0994ccca5f9ae07f10091c26413d237a12028e25152249795e610\nHash: 00008725ddacf7d056ef89c170f589c7c43d427893045c3846cb3d3588f8aea4"];
-0->1[dir=both];
-1->2[dir=both];
-2->3[dir=both];
+0[label="Genesis:\nIndex: 0\nTimestamp: 23:34:47 18/05/2020\nNonce: 171350\nPreviousHash: \nHash: 0000"];
 }

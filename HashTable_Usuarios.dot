@@ -5,7 +5,8 @@ node1[height=55 label="<f0> 0|<f1> 1|<f2> 2|<f3> 3|<f4> 4|<f5> 5|<f6> 6|<f7> 7|<
 A00[label="Carnet: 200310167\nNombre: Dacia Palocz\nCarrera: Ing. en Alimentos\n2e8b43bcae1d00ab77f5ebce45e5cbfb"];
 node1:f0-> A00;
 A10[label="Carnet: 201746645\nNombre: Leanna Chobot\nCarrera: Odontologia\na44eaae157d7174480ac9a6739a4e2e5"];
-node1:f1-> A10;
+A11[label="Carnet: 1\nNombre: 1 1\nCarrera: 1\nc4ca4238a0b923820dcc509a6f75849b"];
+node1:f1-> A10-> A11;
 A20[label="Carnet: 201124442\nNombre: Arabel Raimondo\nCarrera: Ing. Quimica\n3865d7021c0778dbfaa3b34c3d2d7b2b"];
 node1:f2-> A20;
 A30[label="Carnet: 200582958\nNombre: Margarette Terencio\nCarrera: Arquitectura\nb2f07f743ca821dea59e12cd8956a031"];
